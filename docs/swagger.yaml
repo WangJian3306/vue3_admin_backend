@@ -1,0 +1,1352 @@
+basePath: /
+definitions:
+  controller._ResponseLogin:
+    properties:
+      code:
+        allOf:
+        - $ref: '#/definitions/controller.ResCode'
+        description: 业务响应状态码
+      data:
+        description: 响应数据
+        type: string
+      message:
+        description: 提示信息
+        type: string
+      ok:
+        type: boolean
+    type: object
+  controller._ResponseMenuList:
+    properties:
+      code:
+        allOf:
+        - $ref: '#/definitions/controller.ResCode'
+        description: 业务响应状态码
+      data:
+        $ref: '#/definitions/model.Menu'
+      message:
+        description: 提示信息
+        type: string
+      ok:
+        type: boolean
+    type: object
+  controller._ResponseRoleList:
+    properties:
+      code:
+        allOf:
+        - $ref: '#/definitions/controller.ResCode'
+        description: 业务响应状态码
+      data:
+        $ref: '#/definitions/model.ResponseRoleList'
+      message:
+        description: 提示信息
+        type: string
+      ok:
+        type: boolean
+    type: object
+  controller._ResponseTmList:
+    properties:
+      code:
+        allOf:
+        - $ref: '#/definitions/controller.ResCode'
+        description: 业务响应状态码
+      data:
+        $ref: '#/definitions/model.ResponseTmList'
+      message:
+        description: 提示信息
+        type: string
+      ok:
+        type: boolean
+    type: object
+  controller._ResponseToAssignMenuList:
+    properties:
+      code:
+        allOf:
+        - $ref: '#/definitions/controller.ResCode'
+        description: 业务响应状态码
+      data:
+        items:
+          $ref: '#/definitions/model.Menu'
+        type: array
+      message:
+        description: 提示信息
+        type: string
+      ok:
+        type: boolean
+    type: object
+  controller._ResponseToAssignRoleList:
+    properties:
+      code:
+        allOf:
+        - $ref: '#/definitions/controller.ResCode'
+        description: 业务响应状态码
+      data:
+        $ref: '#/definitions/model.ResponseToAssignRole'
+      message:
+        description: 提示信息
+        type: string
+      ok:
+        type: boolean
+    type: object
+  controller._ResponseUserInfo:
+    properties:
+      code:
+        allOf:
+        - $ref: '#/definitions/controller.ResCode'
+        description: 业务响应状态码
+      data:
+        $ref: '#/definitions/model.ResponseUserInfo'
+      message:
+        description: 提示信息
+        type: string
+      ok:
+        type: boolean
+    type: object
+  controller._ResponseUserList:
+    properties:
+      code:
+        allOf:
+        - $ref: '#/definitions/controller.ResCode'
+        description: 业务响应状态码
+      data:
+        $ref: '#/definitions/model.ResponseUserList'
+      message:
+        description: 提示信息
+        type: string
+      ok:
+        type: boolean
+    type: object
+  controller._ResponseUserSingUP:
+    properties:
+      code:
+        allOf:
+        - $ref: '#/definitions/controller.ResCode'
+        description: 业务响应状态码
+      data:
+        type: string
+      message:
+        description: 提示信息
+        type: string
+      ok:
+        type: boolean
+    type: object
+  controller.ResCode:
+    enum:
+    - 200
+    - 201
+    - 202
+    - 203
+    - 204
+    - 205
+    - 206
+    - 207
+    - 208
+    type: integer
+    x-enum-varnames:
+    - CodeSuccess
+    - CodeInvalidParam
+    - CodeUserExist
+    - CodeUserNotExist
+    - CodeInvalidPassword
+    - CodeServerBusy
+    - CodeInvalidToken
+    - CodeNeedLogin
+    - CodeMenuNodeExist
+  controller.ResponseData:
+    properties:
+      code:
+        $ref: '#/definitions/controller.ResCode'
+      data: {}
+      message: {}
+      ok:
+        type: boolean
+    type: object
+  model.Attr:
+    properties:
+      ID:
+        type: integer
+      attrName:
+        description: 属性名称
+        type: string
+      attrValueList:
+        description: 属性值列表
+        items:
+          $ref: '#/definitions/model.AttrValue'
+        type: array
+      categoryId:
+        description: 三级分类ID
+        type: integer
+      categoryLevel:
+        description: 分类级别
+        type: integer
+      createTime:
+        type: string
+      id:
+        description: 属性ID
+        type: integer
+      updateTime:
+        type: string
+    required:
+    - attrName
+    - categoryId
+    - categoryLevel
+    type: object
+  model.AttrValue:
+    properties:
+      attrId:
+        type: integer
+      id:
+        type: integer
+      valueName:
+        type: string
+    required:
+    - valueName
+    type: object
+  model.Menu:
+    properties:
+      ID:
+        type: integer
+      children:
+        items:
+          $ref: '#/definitions/model.Menu'
+        type: array
+      code:
+        type: string
+      createTime:
+        type: string
+      id:
+        type: integer
+      level:
+        type: integer
+      name:
+        type: string
+      pid:
+        type: integer
+      select:
+        type: boolean
+      status:
+        type: string
+      toCode:
+        type: string
+      type:
+        type: integer
+      updateTime:
+        type: string
+    type: object
+  model.ParamDoAssignRole:
+    properties:
+      roleIdList:
+        items:
+          type: integer
+        type: array
+      userId:
+        type: integer
+    type: object
+  model.ParamMenuSave:
+    properties:
+      code:
+        type: string
+      level:
+        type: integer
+      name:
+        type: string
+      pid:
+        type: integer
+      type:
+        type: integer
+    type: object
+  model.ParamMenuUpdate:
+    properties:
+      code:
+        type: string
+      id:
+        type: integer
+      level:
+        type: integer
+      name:
+        type: string
+      pid:
+        type: integer
+    type: object
+  model.ParamRoleSave:
+    properties:
+      remark:
+        description: 角色备注
+        type: string
+      roleName:
+        description: 角色名称，不能为空
+        type: string
+    type: object
+  model.ParamRoleUpdate:
+    properties:
+      remark:
+        description: 角色备注
+        type: string
+      role_id:
+        description: 用户ID，
+        type: integer
+      roleName:
+        description: 角色名称，不能为空
+        type: string
+    type: object
+  model.ParamTmSave:
+    properties:
+      logoUrl:
+        type: string
+      tmName:
+        type: string
+    required:
+    - logoUrl
+    - tmName
+    type: object
+  model.ParamTmUpdate:
+    properties:
+      id:
+        type: integer
+      logoUrl:
+        type: string
+      tmName:
+        type: string
+    required:
+    - logoUrl
+    - tmName
+    type: object
+  model.ParamUserLogin:
+    properties:
+      password:
+        description: 密码，不能为空
+        type: string
+      username:
+        description: 用户名，不能为空
+        type: string
+    required:
+    - password
+    - username
+    type: object
+  model.ParamUserSignUp:
+    properties:
+      name:
+        type: string
+      password:
+        type: string
+      username:
+        type: string
+    required:
+    - name
+    - password
+    - username
+    type: object
+  model.ParamUserUpdate:
+    properties:
+      name:
+        description: 用户昵称
+        type: string
+      username:
+        description: 用户姓名
+        type: string
+    required:
+    - name
+    - username
+    type: object
+  model.ResponseRoleList:
+    properties:
+      current:
+        type: integer
+      pages:
+        type: integer
+      records:
+        items:
+          $ref: '#/definitions/model.Role'
+        type: array
+      searchCount:
+        type: boolean
+      size:
+        type: integer
+      total:
+        type: integer
+    type: object
+  model.ResponseTmList:
+    properties:
+      current:
+        type: integer
+      pages:
+        type: integer
+      records:
+        items:
+          $ref: '#/definitions/model.Trademark'
+        type: array
+      searchCount:
+        type: boolean
+      size:
+        type: integer
+      total:
+        type: integer
+    type: object
+  model.ResponseToAssignRole:
+    properties:
+      allRolesList:
+        items:
+          $ref: '#/definitions/model.Role'
+        type: array
+      assignRoles:
+        items:
+          $ref: '#/definitions/model.Role'
+        type: array
+    type: object
+  model.ResponseUser:
+    properties:
+      ID:
+        type: integer
+      createTime:
+        type: string
+      id:
+        type: integer
+      name:
+        type: string
+      password:
+        type: string
+      phone:
+        type: string
+      roleName:
+        type: string
+      updateTime:
+        type: string
+      username:
+        type: string
+    type: object
+  model.ResponseUserInfo:
+    properties:
+      avatar:
+        type: string
+      buttons:
+        items:
+          type: string
+        type: array
+      name:
+        type: string
+      roles:
+        items:
+          type: string
+        type: array
+      routes:
+        items:
+          type: string
+        type: array
+    type: object
+  model.ResponseUserList:
+    properties:
+      current:
+        type: integer
+      pages:
+        type: integer
+      records:
+        items:
+          $ref: '#/definitions/model.ResponseUser'
+        type: array
+      size:
+        type: integer
+      total:
+        type: integer
+    type: object
+  model.Role:
+    properties:
+      ID:
+        type: integer
+      createTime:
+        type: string
+      id:
+        type: integer
+      remark:
+        type: string
+      roleName:
+        type: string
+      updateTime:
+        type: string
+    type: object
+  model.Trademark:
+    properties:
+      ID:
+        type: integer
+      createTime:
+        type: string
+      id:
+        type: integer
+      logoUrl:
+        type: string
+      tmName:
+        type: string
+      updateTime:
+        type: string
+    type: object
+host: 127.0.0.1:10086
+info:
+  contact:
+    email: 929000201@qq.com
+    name: WangJian
+    url: https://github.com/wangjian3306
+  description: 硅谷甄选项目后端
+  title: vue3_admin 项目接口文档
+  version: "1.0"
+paths:
+  /admin/acl/index/info:
+    get:
+      consumes:
+      - application/json
+      description: 获取用户信息
+      parameters:
+      - description: 用户 Token
+        in: header
+        name: token
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/controller._ResponseUserInfo'
+      security:
+      - ApiKeyAuth: []
+      summary: 用户信息接口
+      tags:
+      - 后台登录与菜单管理
+  /admin/acl/index/login:
+    post:
+      consumes:
+      - application/json
+      description: 处理用户登录请求
+      parameters:
+      - description: 用户登录参数
+        in: body
+        name: object
+        required: true
+        schema:
+          $ref: '#/definitions/model.ParamUserLogin'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/controller._ResponseLogin'
+      security:
+      - ApiKeyAuth: []
+      summary: 用户登录接口
+      tags:
+      - 后台登录与菜单管理
+  /admin/acl/index/logout:
+    post:
+      consumes:
+      - application/json
+      description: 处理用户登出
+      parameters:
+      - description: 用户 Token
+        in: header
+        name: token
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/controller.ResponseData'
+      security:
+      - ApiKeyAuth: []
+      summary: 用户登出接口
+      tags:
+      - 后台登录与菜单管理
+  /admin/acl/permission:
+    get:
+      consumes:
+      - application/json
+      description: 获取菜单列表
+      parameters:
+      - description: 用户 Token
+        in: header
+        name: token
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/controller._ResponseMenuList'
+      security:
+      - ApiKeyAuth: []
+      summary: 获取菜单列表
+      tags:
+      - 菜单管理
+  /admin/acl/permission/doAssign:
+    post:
+      consumes:
+      - application/json
+      description: 给角色分配权限
+      parameters:
+      - description: 用户 Token
+        in: header
+        name: token
+        required: true
+        type: string
+      - description: 角色 ID
+        in: query
+        name: roleId
+        required: true
+        type: integer
+      - collectionFormat: csv
+        description: 菜单 ID列表
+        in: query
+        items:
+          type: integer
+        name: permissionId
+        required: true
+        type: array
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/controller.ResponseData'
+      security:
+      - ApiKeyAuth: []
+      summary: 给角色分配权限
+      tags:
+      - 菜单管理
+  /admin/acl/permission/remove/{id}:
+    delete:
+      consumes:
+      - application/json
+      description: 处理删除菜单请求
+      parameters:
+      - description: 用户 Token
+        in: header
+        name: token
+        required: true
+        type: string
+      - description: 菜单 ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/controller.ResponseData'
+      security:
+      - ApiKeyAuth: []
+      summary: 删除菜单接口
+      tags:
+      - 菜单管理
+  /admin/acl/permission/save:
+    post:
+      consumes:
+      - application/json
+      description: 处理新增菜单请求
+      parameters:
+      - description: 用户 Token
+        in: header
+        name: token
+        required: true
+        type: string
+      - description: 用户登录参数
+        in: body
+        name: object
+        required: true
+        schema:
+          $ref: '#/definitions/model.ParamMenuSave'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/controller.ResponseData'
+      security:
+      - ApiKeyAuth: []
+      summary: 新增菜单接口
+      tags:
+      - 菜单管理
+  /admin/acl/permission/toAssign/{roleId}:
+    get:
+      consumes:
+      - application/json
+      description: 根据角色获取菜单请求
+      parameters:
+      - description: 用户 Token
+        in: header
+        name: token
+        required: true
+        type: string
+      - description: 角色ID
+        in: path
+        name: roleId
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/controller._ResponseToAssignMenuList'
+      security:
+      - ApiKeyAuth: []
+      summary: 根据角色获取菜单接口
+      tags:
+      - 菜单管理
+  /admin/acl/permission/update:
+    put:
+      consumes:
+      - application/json
+      description: 处理更新菜单请求
+      parameters:
+      - description: 用户 Token
+        in: header
+        name: token
+        required: true
+        type: string
+      - description: 用户登录参数
+        in: body
+        name: object
+        required: true
+        schema:
+          $ref: '#/definitions/model.ParamMenuUpdate'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/controller.ResponseData'
+      security:
+      - ApiKeyAuth: []
+      summary: 更新菜单接口
+      tags:
+      - 菜单管理
+  /admin/acl/role/{page}/{limit}:
+    get:
+      consumes:
+      - application/json
+      description: 获取角色列表
+      parameters:
+      - description: 用户 Token
+        in: header
+        name: token
+        required: true
+        type: string
+      - description: 当前页码
+        in: path
+        name: page
+        required: true
+        type: integer
+      - description: 每页记录数
+        in: path
+        name: limit
+        required: true
+        type: integer
+      - description: 角色名
+        in: query
+        name: roleName
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/controller._ResponseRoleList'
+      security:
+      - ApiKeyAuth: []
+      summary: 获取角色分页列表
+      tags:
+      - 角色管理
+  /admin/acl/role/remove/{id}:
+    delete:
+      consumes:
+      - application/json
+      description: 处理删除角色请求
+      parameters:
+      - description: 用户 Token
+        in: header
+        name: token
+        required: true
+        type: string
+      - description: 角色 ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/controller.ResponseData'
+      security:
+      - ApiKeyAuth: []
+      summary: 删除角色接口
+      tags:
+      - 角色管理
+  /admin/acl/role/save:
+    post:
+      consumes:
+      - application/json
+      description: 处理新增角色请求
+      parameters:
+      - description: 用户 Token
+        in: header
+        name: token
+        required: true
+        type: string
+      - description: 用户登录参数
+        in: body
+        name: object
+        required: true
+        schema:
+          $ref: '#/definitions/model.ParamRoleSave'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/controller.ResponseData'
+      security:
+      - ApiKeyAuth: []
+      summary: 新增角色接口
+      tags:
+      - 角色管理
+  /admin/acl/role/update:
+    put:
+      consumes:
+      - application/json
+      description: 处理更新角色请求
+      parameters:
+      - description: 用户 Token
+        in: header
+        name: token
+        required: true
+        type: string
+      - description: 用户登录参数
+        in: body
+        name: object
+        required: true
+        schema:
+          $ref: '#/definitions/model.ParamRoleUpdate'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/controller.ResponseData'
+      security:
+      - ApiKeyAuth: []
+      summary: 更新角色接口
+      tags:
+      - 角色管理
+  /admin/acl/user/{page}/{limit}:
+    get:
+      consumes:
+      - application/json
+      description: 获取用户列表
+      parameters:
+      - description: 用户 Token
+        in: header
+        name: token
+        required: true
+        type: string
+      - description: 当前页码
+        in: path
+        name: page
+        required: true
+        type: integer
+      - description: 每页记录数
+        in: path
+        name: limit
+        required: true
+        type: integer
+      - description: 用户名
+        in: query
+        name: username
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/controller._ResponseUserList'
+      security:
+      - ApiKeyAuth: []
+      summary: 获取用户分页列表
+      tags:
+      - 用户管理
+  /admin/acl/user/doAssignRole:
+    post:
+      consumes:
+      - application/json
+      description: 为用户分配角色
+      parameters:
+      - description: 用户 Token
+        in: header
+        name: token
+        required: true
+        type: string
+      - description: 用户角色
+        in: body
+        name: object
+        required: true
+        schema:
+          $ref: '#/definitions/model.ParamDoAssignRole'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/controller.ResponseData'
+      security:
+      - ApiKeyAuth: []
+      summary: 为用户分配角色
+      tags:
+      - 用户管理
+  /admin/acl/user/remove/{id}:
+    delete:
+      consumes:
+      - application/json
+      description: 处理删除用户请求
+      parameters:
+      - description: 用户 Token
+        in: header
+        name: token
+        required: true
+        type: string
+      - description: 用户 ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/controller.ResponseData'
+      security:
+      - ApiKeyAuth: []
+      summary: 删除用户接口
+      tags:
+      - 用户管理
+  /admin/acl/user/save:
+    post:
+      consumes:
+      - application/json
+      description: 处理用户新增请求
+      parameters:
+      - description: 用户登录参数
+        in: body
+        name: object
+        required: true
+        schema:
+          $ref: '#/definitions/model.ParamUserSignUp'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/controller._ResponseUserSingUP'
+      security:
+      - ApiKeyAuth: []
+      summary: 用户新增接口
+      tags:
+      - 用户管理
+  /admin/acl/user/toAssign/{adminId}:
+    get:
+      consumes:
+      - application/json
+      description: 获取用户角色分配息
+      parameters:
+      - description: 用户 Token
+        in: header
+        name: token
+        required: true
+        type: string
+      - description: 用户 ID
+        in: path
+        name: adminId
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/controller._ResponseToAssignRoleList'
+      security:
+      - ApiKeyAuth: []
+      summary: 用户角色分配接口
+      tags:
+      - 用户管理
+  /admin/acl/user/update:
+    put:
+      consumes:
+      - application/json
+      description: 处理更新用户请求
+      parameters:
+      - description: 用户 Token
+        in: header
+        name: token
+        required: true
+        type: string
+      - description: 用户登录参数
+        in: body
+        name: object
+        required: true
+        schema:
+          $ref: '#/definitions/model.ParamUserUpdate'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/controller.ResponseData'
+      security:
+      - ApiKeyAuth: []
+      summary: 更新用户接口
+      tags:
+      - 用户管理
+  /admin/deleteAttr/{attrId}:
+    delete:
+      consumes:
+      - application/json
+      description: 处理删除基础属性请求
+      parameters:
+      - description: 用户 Token
+        in: header
+        name: token
+        required: true
+        type: string
+      - description: 属性 ID
+        in: path
+        name: attrId
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/controller.ResponseData'
+      security:
+      - ApiKeyAuth: []
+      summary: 删除基础属性接口
+      tags:
+      - 商品基础属性接口
+  /admin/product/attrInfoList/{c1Id}/{c2Id}/{c3Id}:
+    get:
+      consumes:
+      - application/json
+      description: 处理获取分类下已有的属性与属性值请求
+      parameters:
+      - description: 用户 Token
+        in: header
+        name: token
+        required: true
+        type: string
+      - description: 分类一 ID
+        in: path
+        name: c1Id
+        required: true
+        type: integer
+      - description: 分类二 ID
+        in: path
+        name: c2Id
+        required: true
+        type: integer
+      - description: 分类三 ID
+        in: path
+        name: c3Id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/controller._ResponseToAssignMenuList'
+      security:
+      - ApiKeyAuth: []
+      summary: 获取分类下已有的属性与属性值接口
+      tags:
+      - 商品基础属性接口
+  /admin/product/baseTrademark/{page}/{limit}:
+    get:
+      consumes:
+      - application/json
+      description: 获取品牌列表
+      parameters:
+      - description: 用户 Token
+        in: header
+        name: token
+        required: true
+        type: string
+      - description: 当前页码
+        in: path
+        name: page
+        required: true
+        type: integer
+      - description: 每页记录数
+        in: path
+        name: limit
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model.ResponseTmList'
+      security:
+      - ApiKeyAuth: []
+      summary: 获取品牌分页列表
+      tags:
+      - 品牌管理
+  /admin/product/baseTrademark/remove/{id}:
+    delete:
+      consumes:
+      - application/json
+      description: 处理删除品牌请求
+      parameters:
+      - description: 用户 Token
+        in: header
+        name: token
+        required: true
+        type: string
+      - description: 品牌 ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/controller.ResponseData'
+      security:
+      - ApiKeyAuth: []
+      summary: 删除品牌接口
+      tags:
+      - 品牌管理
+  /admin/product/baseTrademark/save:
+    post:
+      consumes:
+      - application/json
+      description: 新增品牌接口
+      parameters:
+      - description: 用户 Token
+        in: header
+        name: token
+        required: true
+        type: string
+      - description: 用户角色
+        in: body
+        name: object
+        required: true
+        schema:
+          $ref: '#/definitions/model.ParamTmSave'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/controller.ResponseData'
+      security:
+      - ApiKeyAuth: []
+      summary: 新增品牌接口
+      tags:
+      - 品牌管理
+  /admin/product/baseTrademark/update:
+    put:
+      consumes:
+      - application/json
+      description: 处理更新品牌请求
+      parameters:
+      - description: 用户 Token
+        in: header
+        name: token
+        required: true
+        type: string
+      - description: 用户登录参数
+        in: body
+        name: object
+        required: true
+        schema:
+          $ref: '#/definitions/model.ParamTmUpdate'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/controller.ResponseData'
+      security:
+      - ApiKeyAuth: []
+      summary: 更新品牌接口
+      tags:
+      - 品牌管理
+  /admin/product/fileUpload:
+    post:
+      consumes:
+      - application/json
+      description: 上传文件
+      parameters:
+      - description: 用户 Token
+        in: header
+        name: token
+        required: true
+        type: string
+      - description: 文件
+        in: formData
+        name: file
+        required: true
+        type: file
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/controller.ResponseData'
+      security:
+      - ApiKeyAuth: []
+      summary: 上传文件接口
+      tags:
+      - 上传文件
+  /admin/product/getCategory1:
+    get:
+      consumes:
+      - application/json
+      description: 获取一级分类
+      parameters:
+      - description: 用户 Token
+        in: header
+        name: token
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/controller._ResponseTmList'
+      security:
+      - ApiKeyAuth: []
+      summary: 获取一级分类接口
+      tags:
+      - 商品分类接口
+  /admin/product/getCategory2/{id}:
+    get:
+      consumes:
+      - application/json
+      description: 获取二级分类
+      parameters:
+      - description: 用户 Token
+        in: header
+        name: token
+        required: true
+        type: string
+      - description: 分类一 ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/controller._ResponseTmList'
+      security:
+      - ApiKeyAuth: []
+      summary: 获取二级分类接口
+      tags:
+      - 商品分类接口
+  /admin/product/getCategory3/{id}:
+    get:
+      consumes:
+      - application/json
+      description: 获取三级分类
+      parameters:
+      - description: 用户 Token
+        in: header
+        name: token
+        required: true
+        type: string
+      - description: 分类二 ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/controller._ResponseTmList'
+      security:
+      - ApiKeyAuth: []
+      summary: 获取三级分类接口
+      tags:
+      - 商品分类接口
+  /admin/product/saveAttrInfo:
+    post:
+      consumes:
+      - application/json
+      description: 处理添加或者修改已有的属性请求
+      parameters:
+      - description: 用户 Token
+        in: header
+        name: token
+        required: true
+        type: string
+      - description: 属性信息
+        in: body
+        name: object
+        required: true
+        schema:
+          $ref: '#/definitions/model.Attr'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/controller.ResponseData'
+      security:
+      - ApiKeyAuth: []
+      summary: 添加或者修改已有的属性的接口
+      tags:
+      - 商品基础属性接口
+swagger: "2.0"

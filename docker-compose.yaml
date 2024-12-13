@@ -1,0 +1,33 @@
+services:
+  vue3_admin_mysql:
+    image: registry.cn-shanghai.aliyuncs.com/wangjian3306/mysql:8.0
+    container_name: vue3_admin_mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: rootpassword # MySQL root 用户的密码
+      MYSQL_DATABASE: vue3_admin        # 可选，创建默认数据库
+      MYSQL_USER: vue3_admin            # 可选，创建自定义用户
+      MYSQL_PASSWORD: password          # 可选，自定义用户密码
+    ports:
+      - "3307:3306"
+    volumes:
+      - ./init-sql/:/docker-entrypoint-initdb.d/
+    command:
+      --default-authentication-plugin=mysql_native_password
+  vue3_admin_backend:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: vue3_admin_backend
+    restart: always
+    environment:
+      TZ: Asia/Shanghai
+      VUE3_ADMIN_MYSQL_USER: vue3_admin
+      VUE3_ADMIN_MYSQL_DATABASE: vue3_admin
+      VUE3_ADMIN_MYSQL_PASSWORD: password
+      VUE3_ADMIN_MYSQL_HOST: vue3_admin_mysql
+    ports:
+      - "10086:10086"
+    depends_on:
+      - vue3_admin_mysql
+    links:
+      - vue3_admin_mysql

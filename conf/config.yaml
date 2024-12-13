@@ -1,0 +1,31 @@
+name: "vue3_admin"
+mode: "dev"
+port: 10086
+version: "v0.0.1"
+
+static:
+  host: "127.0.0.1"
+  path: "./static"
+
+snowflake:
+  start_time: "2024-09-01"
+  machine_id: 1
+
+auth:
+  jwt_expire: 8760
+
+log:
+  level: "debug"
+  filename: "web_app.log"
+  max_size: 200
+  max_age: 30
+  max_backups: 7
+
+mysql:
+  host: "127.0.0.1"
+  port: 3306
+  user: "root"
+  password: "wangjian1233"
+  dbname: "vue3_admin"
+  max_open_conns: 200
+  max_idle_conns: 10
