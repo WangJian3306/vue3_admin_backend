@@ -73,16 +73,15 @@
 
 ### 商品 SKU 接口
 
-- 获取某个SPU下的全部的售卖商品的图片数据（/admin/product/spuImageList/{spuId}）
-- 获取某个SPU下的全部的已有的销售属性接口（/admin/product/spuSaleAttrList/{spuId}）
-- 新增SKU（/admin/product/saveSkuInfo）
-- 根据SPU ID查询SKU（/admin/product/findBySpuId/{spuId}）
-- 获取商品 SKU 分页列表（/admin/product/list/{page}/{limit}）
-- 商品上架接口（/admin/product/onSale/{skuId}）
-- 商品下架接口（/admin/product/cancelSale/{skuId}）
-- 商品详情接口（/admin/product/getSkuInfo/{skuId}）
-- 删除商品接口（/admin/product/deleteSKU/{skuId})
-
+- [ ] 获取某个SPU下的全部的售卖商品的图片数据（/admin/product/spuImageList/{spuId}）
+- [ ] 获取某个SPU下的全部的已有的销售属性接口（/admin/product/spuSaleAttrList/{spuId}）
+- [ ] 新增SKU（/admin/product/saveSkuInfo）
+- [ ] 根据SPU ID查询SKU（/admin/product/findBySpuId/{spuId}）
+- [ ] 获取商品 SKU 分页列表（/admin/product/list/{page}/{limit}）
+- [ ] 商品上架接口（/admin/product/onSale/{skuId}）
+- [ ] 商品下架接口（/admin/product/cancelSale/{skuId}）
+- [ ] 商品详情接口（/admin/product/getSkuInfo/{skuId}）
+- [ ] 删除商品接口（/admin/product/deleteSKU/{skuId})
 
 ## 不同
 
@@ -126,6 +125,6 @@
 
 ## 鸣谢：
 
-感谢尚硅谷和贾成豪录制的前端视频课程免费给大家学习。
+感谢尚硅谷和贾成豪老师录制的前端视频课程免费给大家学习。
 
 （完）
