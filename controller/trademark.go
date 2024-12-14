@@ -135,3 +135,22 @@ func (*trademarkController) DeleteTrademark(c *gin.Context) {
 
 	ResponseSuccess(c, nil)
 }
+
+// GetAllTrademarkList 获取所有品牌列表
+// @Summary 获取所有品牌列表
+// @Description 获取所有品牌列表
+// @Tags 品牌管理
+// @Accept application/json
+// @Produce application/json
+// @Param token header string true "用户 Token"
+// @Security ApiKeyAuth
+// @Success 200 {object} _ResponseAllTmList
+// @Router /admin/product/baseTrademark/getTrademarkList [get]
+func (*trademarkController) GetAllTrademarkList(c *gin.Context) {
+	data, err := service.TrademarkService.GetAllTrademarkList()
+	if err != nil {
+		zap.L().Error("service.TrademarkService.GetAllTrademarkList() failed", zap.Error(err))
+		ResponseError(c, CodeServerBusy)
+	}
+	ResponseSuccess(c, data)
+}

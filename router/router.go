@@ -72,6 +72,7 @@ func Setup(mode string) *gin.Engine {
 		adminProductGroup.GET("/baseTrademark/:page/:limit", controller.TrademarkController.GetTrademark)
 		adminProductGroup.PUT("/baseTrademark/update", controller.TrademarkController.UpdateTrademark)
 		adminProductGroup.DELETE("/baseTrademark/remove/:id", controller.TrademarkController.DeleteTrademark)
+		adminProductGroup.GET("/baseTrademark/getTrademarkList", controller.TrademarkController.GetAllTrademarkList)
 
 		// 分类管理
 		adminProductGroup.GET("/getCategory1", controller.CategoryController.GetCategory1)

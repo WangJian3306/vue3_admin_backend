@@ -1,5 +1,21 @@
 basePath: /
 definitions:
+  controller._ResponseAllTmList:
+    properties:
+      code:
+        allOf:
+        - $ref: '#/definitions/controller.ResCode'
+        description: 业务响应状态码
+      data:
+        items:
+          $ref: '#/definitions/model.Trademark'
+        type: array
+      message:
+        description: 提示信息
+        type: string
+      ok:
+        type: boolean
+    type: object
   controller._ResponseLogin:
     properties:
       code:
@@ -1125,6 +1141,29 @@ paths:
       security:
       - ApiKeyAuth: []
       summary: 获取品牌分页列表
+      tags:
+      - 品牌管理
+  /admin/product/baseTrademark/getTrademarkList:
+    get:
+      consumes:
+      - application/json
+      description: 获取所有品牌列表
+      parameters:
+      - description: 用户 Token
+        in: header
+        name: token
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/controller._ResponseAllTmList'
+      security:
+      - ApiKeyAuth: []
+      summary: 获取所有品牌列表
       tags:
       - 品牌管理
   /admin/product/baseTrademark/remove/{id}:

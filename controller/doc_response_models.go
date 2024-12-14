@@ -59,3 +59,8 @@ type _ResponseTmList struct {
 	_BaseResponse
 	Data model.ResponseTmList `json:"data"`
 }
+
+type _ResponseAllTmList struct {
+	_BaseResponse
+	Data []model.Trademark `json:"data"`
+}

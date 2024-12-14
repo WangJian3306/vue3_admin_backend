@@ -61,3 +61,7 @@ func (t *trademarkService) UpdateTrademark(p *model.ParamTmUpdate) (err error) {
 func (t *trademarkService) DeleteTrademark(tmId int64) (err error) {
 	return mysql.TrademarkDao.DeleteTrademark(tmId)
 }
+
+func (t *trademarkService) GetAllTrademarkList() (data []model.Trademark, err error) {
+	return mysql.TrademarkDao.GetAllTrademarkList()
+}

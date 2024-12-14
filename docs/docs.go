@@ -975,6 +975,43 @@ const docTemplate = `{
                 }
             }
         },
+        "/admin/product/baseTrademark/getTrademarkList": {
+            "get": {
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
+                "description": "获取所有品牌列表",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "品牌管理"
+                ],
+                "summary": "获取所有品牌列表",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "用户 Token",
+                        "name": "token",
+                        "in": "header",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/controller._ResponseAllTmList"
+                        }
+                    }
+                }
+            }
+        },
         "/admin/product/baseTrademark/remove/{id}": {
             "delete": {
                 "security": [
@@ -1412,6 +1449,32 @@ const docTemplate = `{
                 },
                 "data": {},
                 "message": {},
+                "ok": {
+                    "type": "boolean"
+                }
+            }
+        },
+        "controller._ResponseAllTmList": {
+            "type": "object",
+            "properties": {
+                "code": {
+                    "description": "业务响应状态码",
+                    "allOf": [
+                        {
+                            "$ref": "#/definitions/controller.ResCode"
+                        }
+                    ]
+                },
+                "data": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/model.Trademark"
+                    }
+                },
+                "message": {
+                    "description": "提示信息",
+                    "type": "string"
+                },
                 "ok": {
                     "type": "boolean"
                 }

@@ -67,3 +67,11 @@ func (*trademarkDao) DeleteTrademark(tmId int64) (err error) {
 	_, err = db.Exec(sqlStr, tmId)
 	return err
 }
+
+func (*trademarkDao) GetAllTrademarkList() (data []model.Trademark, err error) {
+	sqlStr := `SELECT tm_id, tm_name, logo_url FROM trademark`
+	if err = db.Select(&data, sqlStr); err != nil {
+		return nil, err
+	}
+	return data, nil
+}
