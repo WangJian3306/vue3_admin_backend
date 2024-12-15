@@ -269,6 +269,156 @@ INSERT INTO `role_menu` VALUES (1,1,1,'2024-12-07 14:56:32','2024-12-07 14:56:32
 UNLOCK TABLES;
 
 --
+-- Table structure for table `sale_attr`
+--
+
+DROP TABLE IF EXISTS `sale_attr`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `sale_attr` (
+  `id` bigint NOT NULL AUTO_INCREMENT,
+  `sale_attr_id` bigint NOT NULL,
+  `sale_attr_name` varchar(255) NOT NULL,
+  `create_time` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
+  `update_time` timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`) USING BTREE
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `sale_attr`
+--
+
+LOCK TABLES `sale_attr` WRITE;
+/*!40000 ALTER TABLE `sale_attr` DISABLE KEYS */;
+INSERT INTO `sale_attr` VALUES (1,1,'颜色','2024-12-14 02:39:54','2024-12-14 02:39:54'),(2,2,'版本','2024-12-14 02:39:54','2024-12-14 02:39:54'),(3,3,'尺码','2024-12-14 02:39:54','2024-12-14 02:39:54');
+/*!40000 ALTER TABLE `sale_attr` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `sale_attr_value`
+--
+
+DROP TABLE IF EXISTS `sale_attr_value`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `sale_attr_value` (
+  `id` bigint NOT NULL AUTO_INCREMENT,
+  `sale_attr_value_id` bigint NOT NULL,
+  `sale_attr_value_name` varchar(255) NOT NULL,
+  `sale_attr_id` bigint NOT NULL,
+  `spu_id` bigint NOT NULL,
+  `create_time` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
+  `update_time` timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`),
+  KEY `idx_sale_attr_value_name` (`sale_attr_value_name`) USING BTREE,
+  KEY `idx_sale_attr_value_id` (`sale_attr_value_id`) USING BTREE
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `sale_attr_value`
+--
+
+LOCK TABLES `sale_attr_value` WRITE;
+/*!40000 ALTER TABLE `sale_attr_value` DISABLE KEYS */;
+INSERT INTO `sale_attr_value` VALUES (1,9304018587780,'红色',1,9304018587776,'2024-12-15 03:52:35','2024-12-15 03:52:35'),(2,9304018587781,'黑色',1,9304018587776,'2024-12-15 03:52:35','2024-12-15 03:52:35'),(3,9307314958468,'蓝色',1,9307314958464,'2024-12-15 04:46:14','2024-12-15 04:46:14'),(4,9307314958469,'黑色',1,9307314958464,'2024-12-15 04:46:14','2024-12-15 04:46:14'),(5,9307386580099,'银色',1,9307386580096,'2024-12-15 04:47:24','2024-12-15 04:47:24'),(6,9307444134019,'紫色',1,9307444134016,'2024-12-15 04:48:20','2024-12-15 04:48:20');
+/*!40000 ALTER TABLE `sale_attr_value` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `spu`
+--
+
+DROP TABLE IF EXISTS `spu`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `spu` (
+  `id` bigint NOT NULL AUTO_INCREMENT,
+  `spu_id` bigint NOT NULL,
+  `spu_name` varchar(255) NOT NULL,
+  `description` varchar(255) NOT NULL,
+  `category3_id` bigint NOT NULL,
+  `tm_id` bigint NOT NULL,
+  `create_time` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
+  `update_time` timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`),
+  KEY `idx_spu_name` (`spu_name`) USING BTREE,
+  KEY `idx_spu_id` (`spu_id`) USING BTREE
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `spu`
+--
+
+LOCK TABLES `spu` WRITE;
+/*!40000 ALTER TABLE `spu` DISABLE KEYS */;
+INSERT INTO `spu` VALUES (1,9304018587776,'oppo','OPPO（OPPO广东移动通信有限公司），是由陈明永于2004年创立，[107] 是一家全球领先的智能终端制造商和移动互联网服务提供商 [108]，业务遍及50多个国家和地区。[109] 通过40多万个销售网点及2500个服务重新，与全球用户共享科技之美。[110]',61,8883796205696,'2024-12-15 03:52:35','2024-12-15 03:52:35'),(2,9307314958464,'vivo','vivo品牌产品包括智能手机、平板电脑、智能手表等 [94]，截至2022年8月，进驻60多个国家和地区，全球用户覆盖4亿多人，研发覆盖深圳、东莞（总部）、北京、上海、南京、杭州、西安等。2011年11月vivo发布首款智能手机；2019年3月vivo发布子品牌iQOO，宣传“生而强悍探索不止”理念。 [93]',61,8883859017856,'2024-12-15 04:46:14','2024-12-15 04:46:14'),(3,9307386580096,'华为','华为技术有限公司（Huawei Technologies Co., Ltd，简称“华为”），1987年由任正非创立，总部位于广东省深圳市龙岗区 [434]，是全球领先的信息与通信技术（ICT）解决方案供应商 [12]，主要包括运营商网络 [651]、企业解决方案 [652]、华为终端 [653]、手机 [655]、华为云 [654]、汽车终端 [656]、互联网 [657]、支付等多个业务。 [658]',61,8883567383680,'2024-12-15 04:47:24','2024-12-15 04:47:24'),(4,9307444134016,'Apple','苹果公司（Apple Inc.），是美国的一家跨国科技公司，2023财年收入为3832.85亿美元， [307]总部位于美国加州库比蒂诺硅谷，由史蒂夫·乔布斯和斯蒂夫·盖瑞·沃兹尼亚克共同创立。公司最初从事电脑设计与销售业务，后发展为包括设计和研发电脑、手机、穿戴设备等电子产品，提供计算机软件、在线服务等业务 [65] [184] [199]。',61,9214369407104,'2024-12-15 04:48:20','2024-12-15 04:48:20');
+/*!40000 ALTER TABLE `spu` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `spu_image_list`
+--
+
+DROP TABLE IF EXISTS `spu_image_list`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `spu_image_list` (
+  `id` bigint NOT NULL AUTO_INCREMENT,
+  `image_id` bigint NOT NULL,
+  `image_name` varchar(255) NOT NULL,
+  `image_url` varchar(255) NOT NULL,
+  `spu_id` bigint NOT NULL,
+  `create_time` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
+  `update_time` timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`),
+  KEY `idx_image_name` (`image_name`) USING BTREE,
+  KEY `idx_image_id` (`image_id`) USING BTREE
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `spu_image_list`
+--
+
+LOCK TABLES `spu_image_list` WRITE;
+/*!40000 ALTER TABLE `spu_image_list` DISABLE KEYS */;
+INSERT INTO `spu_image_list` VALUES (1,9304018587777,'oppo1.jpeg','/api/static/img/sph/20241215/oppo1.jpeg',9304018587776,'2024-12-15 03:52:35','2024-12-15 03:52:35'),(2,9304018587778,'oppo2.jpeg','/api/static/img/sph/20241215/oppo2.jpeg',9304018587776,'2024-12-15 03:52:35','2024-12-15 03:52:35'),(3,9307314958465,'vivo1.jpeg','/api/static/img/sph/20241215/vivo1.jpeg',9307314958464,'2024-12-15 04:46:14','2024-12-15 04:46:14'),(4,9307314958466,'vivo2.jpeg','/api/static/img/sph/20241215/vivo2.jpeg',9307314958464,'2024-12-15 04:46:14','2024-12-15 04:46:14'),(5,9307386580097,'meta70.jpg','/api/static/img/sph/20241215/meta70.jpg',9307386580096,'2024-12-15 04:47:24','2024-12-15 04:47:24'),(6,9307444134017,'apple14pro.jpeg','/api/static/img/sph/20241215/apple14pro.jpeg',9307444134016,'2024-12-15 04:48:20','2024-12-15 04:48:20');
+/*!40000 ALTER TABLE `spu_image_list` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `spu_sale_attr`
+--
+
+DROP TABLE IF EXISTS `spu_sale_attr`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `spu_sale_attr` (
+  `id` bigint NOT NULL AUTO_INCREMENT,
+  `spu_sale_attr_id` bigint NOT NULL,
+  `base_sale_attr_id` bigint NOT NULL,
+  `sale_attr_name` varchar(255) NOT NULL,
+  `spu_id` bigint NOT NULL,
+  `create_time` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
+  `update_time` timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`) USING BTREE
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `spu_sale_attr`
+--
+
+LOCK TABLES `spu_sale_attr` WRITE;
+/*!40000 ALTER TABLE `spu_sale_attr` DISABLE KEYS */;
+INSERT INTO `spu_sale_attr` VALUES (1,9304018587779,1,'颜色',9304018587776,'2024-12-15 03:52:35','2024-12-15 03:52:35'),(2,9307314958467,1,'颜色',9307314958464,'2024-12-15 04:46:14','2024-12-15 04:46:14'),(3,9307386580098,1,'颜色',9307386580096,'2024-12-15 04:47:24','2024-12-15 04:47:24'),(4,9307444134018,1,'颜色',9307444134016,'2024-12-15 04:48:20','2024-12-15 04:48:20');
+/*!40000 ALTER TABLE `spu_sale_attr` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
 -- Table structure for table `trademark`
 --
 
@@ -285,7 +435,7 @@ CREATE TABLE `trademark` (
   PRIMARY KEY (`id`),
   UNIQUE KEY `idx_tm_name` (`tm_name`) USING BTREE,
   UNIQUE KEY `idx_tm_id` (`tm_id`) USING BTREE
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -294,7 +444,7 @@ CREATE TABLE `trademark` (
 
 LOCK TABLES `trademark` WRITE;
 /*!40000 ALTER TABLE `trademark` DISABLE KEYS */;
-INSERT INTO `trademark` VALUES (1,8883567383680,'华为','/api/static/img/sph/20240908/huawei.jpg','2024-12-10 09:49:18','2024-12-10 09:49:18'),(2,8883595895936,'小米','/api/static/img/sph/20240909/xiaomi.png','2024-12-10 09:49:46','2024-12-10 09:49:46'),(3,8883796205696,'OPPO','/api/static/img/sph/20241210/oppo.jpeg','2024-12-10 09:53:02','2024-12-10 09:53:02'),(4,8883859017856,'vivo','/api/static/img/sph/20241210/vivo.jpeg','2024-12-10 09:54:03','2024-12-10 09:54:45'),(5,8883988185216,'雅诗兰黛','/api/static/img/sph/20241210/ysld.jpeg','2024-12-10 09:56:09','2024-12-10 09:57:16');
+INSERT INTO `trademark` VALUES (1,8883567383680,'华为','/api/static/img/sph/20240908/huawei.jpg','2024-12-10 09:49:18','2024-12-10 09:49:18'),(2,8883595895936,'小米','/api/static/img/sph/20240909/xiaomi.png','2024-12-10 09:49:46','2024-12-10 09:49:46'),(3,8883796205696,'OPPO','/api/static/img/sph/20241210/oppo.jpeg','2024-12-10 09:53:02','2024-12-10 09:53:02'),(4,8883859017856,'vivo','/api/static/img/sph/20241210/vivo.jpeg','2024-12-10 09:54:03','2024-12-10 09:54:45'),(5,8883988185216,'雅诗兰黛','/api/static/img/sph/20241210/ysld.jpeg','2024-12-10 09:56:09','2024-12-10 09:57:16'),(6,9214369407104,'Apple','/api/static/img/sph/20241214/apple_logo.jpeg','2024-12-14 03:33:27','2024-12-14 03:33:27');
 /*!40000 ALTER TABLE `trademark` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -367,4 +517,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2024-12-12 17:07:07
+-- Dump completed on 2024-12-15 13:01:12
