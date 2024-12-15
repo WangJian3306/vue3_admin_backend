@@ -47,6 +47,7 @@
 - [X] 新增品牌接口（/admin/product/baseTrademark/save）
 - [X] 更新品牌接口（/admin/product/baseTrademark/update）
 - [X] 获取品牌分页列表接口（/admin/product/baseTrademark/{page}/{limit}）
+- [X] 获取全部品牌数据（/admin/product/baseTrademark/getTrademarkList）
 
 ### 上传文件
 
@@ -58,23 +59,27 @@
 - [X] 获取二级分类接口（/admin/product/getCategory2/{id}）
 - [X] 获取三级分类接口（/admin/product/getCategory3/{id}）
 
+### 商品 SPU 接口
+
+- [X] 获取SPU分页列表（/admin/product/{page}/{limit}
+- [X] 获取全部销售属性（/admin/product/baseSaleAttrList）
+- [X] 新增SPU（/admin/product/saveSpuInfo）
+
+### 商品 SKU 接口
+
+- [X] 获取某个SPU下的全部的售卖商品的图片数据（/admin/product/spuImageList/{spuId}）
+- [X] 获取某个SPU下的全部的已有的销售属性接口（/admin/product/spuSaleAttrList/{spuId
+
 ## 未实现的 API
 
 ### 商品 SPU 接口
 
-- [ ] 获取SPU分页列表（/admin/product/{page}/{limit}）
-- [ ] 获取全部销售属性（/admin/product/baseSaleAttrList）
-- [ ] 新增SPU（/admin/product/saveSpuInfo）
 - [ ] 更新SPU（/admin/product/updateSpuInfo）
 - [ ] 删除SPU（/admin/product/deleteSpu/{spuId}）
 
-### 品牌管理
-- [ ] 获取全部品牌数据（/admin/product/baseTrademark/getTrademarkList）
 
 ### 商品 SKU 接口
 
-- [ ] 获取某个SPU下的全部的售卖商品的图片数据（/admin/product/spuImageList/{spuId}）
-- [ ] 获取某个SPU下的全部的已有的销售属性接口（/admin/product/spuSaleAttrList/{spuId}）
 - [ ] 新增SKU（/admin/product/saveSkuInfo）
 - [ ] 根据SPU ID查询SKU（/admin/product/findBySpuId/{spuId}）
 - [ ] 获取商品 SKU 分页列表（/admin/product/list/{page}/{limit}）
@@ -103,6 +108,28 @@
     const userStore = useUserStore()
     const headers = {Token: userStore.token}
 </script>
+```
+
+2. 前端`SaleAttr interface`中的`baseSaleAttrId`字段数据类型为`number`，页面使用不兼容时使用`Number()`进行数据类型转换
+   
+```javascript
+// 销售属性对象
+export interface SaleAttr {
+  id?: number
+  spuId?: number
+  baseSaleAttrId: number // 这里是 number，没有 string
+  saleAttrName: string
+  spuSaleAttrValueList: SpuSaleAttrValueList
+  flag?: boolean
+  saleAttrValue?: string
+}
+
+// 准备一个新的销售属性对象：将来带给服务器即可
+let newSaleAtrr: SaleAttr = {
+   baseSaleAttrId: Number(baseSaleAttrId), // 这里是使用 Number() 进行数据类型转换
+   saleAttrName,
+   spuSaleAttrValueList: [],
+}
 ```
 
 ## 如何使用
