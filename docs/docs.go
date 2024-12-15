@@ -1236,6 +1236,50 @@ const docTemplate = `{
                 }
             }
         },
+        "/admin/product/deleteSpu/{spuId}": {
+            "delete": {
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
+                "description": "处理删除SPU请求",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "商品SPU接口"
+                ],
+                "summary": "删除SPU接口",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "用户 Token",
+                        "name": "token",
+                        "in": "header",
+                        "required": true
+                    },
+                    {
+                        "type": "integer",
+                        "description": "SPU ID",
+                        "name": "spuId",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/controller.ResponseData"
+                        }
+                    }
+                }
+            }
+        },
         "/admin/product/fileUpload": {
             "post": {
                 "security": [
@@ -1580,6 +1624,52 @@ const docTemplate = `{
                         "description": "OK",
                         "schema": {
                             "$ref": "#/definitions/controller._ResponseSpuSaleAttrList"
+                        }
+                    }
+                }
+            }
+        },
+        "/admin/product/updateSpuInfo": {
+            "post": {
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
+                "description": "更新SPU接口",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "商品SPU接口"
+                ],
+                "summary": "更新SPU接口",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "用户 Token",
+                        "name": "token",
+                        "in": "header",
+                        "required": true
+                    },
+                    {
+                        "description": "SPU信息",
+                        "name": "object",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/model.Spu"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/controller.ResponseData"
                         }
                     }
                 }

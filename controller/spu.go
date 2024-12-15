@@ -163,3 +163,59 @@ func (s *spuController) GetSpuSaleAttrList(c *gin.Context) {
 	}
 	ResponseSuccess(c, spuSaleAttrList)
 }
+
+// UpdateSpuInfo 更新SPU接口
+// @Summary 更新SPU接口
+// @Description 更新SPU接口
+// @Tags 商品SPU接口
+// @Accept application/json
+// @Produce application/json
+// @Param token header string true "用户 Token"
+// @Param object body model.Spu true "SPU信息"
+// @Security ApiKeyAuth
+// @Success 200 {object} ResponseData
+// @Router /admin/product/updateSpuInfo [post]
+func (s *spuController) UpdateSpuInfo(c *gin.Context) {
+	p := new(model.Spu)
+	if err := c.ShouldBindJSON(p); err != nil {
+		zap.L().Error("UpdateSpuInfo with invalid param", zap.Error(err))
+		ResponseError(c, CodeInvalidParam)
+		return
+	}
+
+	err := service.SpuService.UpdateSpuInfo(p)
+	if err != nil {
+		zap.L().Error("service.SpuService.UpdateSpuInfo() failed", zap.Error(err))
+		ResponseError(c, CodeServerBusy)
+		return
+	}
+	ResponseSuccess(c, nil)
+}
+
+// DeleteSpu 删除SPU
+// @Summary 删除SPU接口
+// @Description 处理删除SPU请求
+// @Tags 商品SPU接口
+// @Accept application/json
+// @Produce application/json
+// @Param token header string true "用户 Token"
+// @Param spuId path int true "SPU ID"
+// @Security ApiKeyAuth
+// @Success 200 {object} ResponseData
+// @Router /admin/product/deleteSpu/{spuId} [delete]
+func (s *spuController) DeleteSpu(c *gin.Context) {
+	idStr := c.Param("id")
+	spuId, err := strconv.ParseInt(idStr, 10, 64)
+	if err != nil {
+		zap.L().Error("service.SpuService.DeleteSpu() failed", zap.Error(err))
+		ResponseError(c, CodeInvalidParam)
+		return
+	}
+	err = service.SpuService.DeleteSpu(spuId)
+	if err != nil {
+		zap.L().Error("service.SpuService.DeleteSpu() failed", zap.Error(err))
+		ResponseError(c, CodeServerBusy)
+		return
+	}
+	ResponseSuccess(c, nil)
+}

@@ -107,3 +107,68 @@ func (s *spuService) GetSpuSaleAttrList(spuId int64) (spuSaleAttrList []*model.S
 	}
 	return spuSaleAttrList, err
 }
+
+func (s *spuService) UpdateSpuInfo(spu *model.Spu) error {
+	// 创建一个 SPU 对象
+	newSpu := &model.Spu{
+		SpuID:       spu.SpuID,
+		SpuName:     spu.SpuName,
+		Description: spu.Description,
+		Category3ID: spu.Category3ID,
+		TmID:        spu.TmID,
+	}
+
+	// 创建一个图片列表
+	imageList := make([]*model.SpuImage, 0, 2)
+	if len(spu.SpuImageList) > 0 {
+		for _, image := range spu.SpuImageList {
+			imageList = append(imageList, &model.SpuImage{
+				ImageID:   image.ImageID,
+				ImageName: image.ImageName,
+				ImageUrl:  image.ImageUrl,
+				SpuID:     image.SpuID,
+			})
+		}
+	}
+
+	// SPU 销售属性
+	spuSaleAttrList := make([]*model.SpuSaleAttr, 0, 2)
+	if len(spu.SpuSaleAttrList) > 0 {
+		for _, spuSaleAttr := range spu.SpuSaleAttrList {
+			spuSaleAttrList = append(spuSaleAttrList, &model.SpuSaleAttr{
+				SpuSaleAttrID:  spuSaleAttr.SpuSaleAttrID,
+				BaseSaleAttrId: spuSaleAttr.BaseSaleAttrId,
+				SaleAttrName:   spuSaleAttr.SaleAttrName,
+				SpuId:          spuSaleAttr.SpuId,
+			})
+		}
+	}
+
+	// SPU销售属性值
+	spuSaleAttrValueList := make([]*model.SaleAttrValue, 0, 2)
+	if len(spu.SpuSaleAttrList) > 0 {
+		for _, spuSaleAttr := range spu.SpuSaleAttrList {
+			if spuSaleAttr.SpuSaleAttrValue != nil && len(spuSaleAttr.SpuSaleAttrValue) > 0 {
+				for _, spuSaleAttrValue := range spuSaleAttr.SpuSaleAttrValue {
+					spuSaleAttrValueList = append(spuSaleAttrValueList, &model.SaleAttrValue{
+						SaleAttrValueID:   spuSaleAttrValue.SaleAttrValueID,
+						SaleAttrValueName: spuSaleAttrValue.SaleAttrValueName,
+						BaseSaleAttrId:    spuSaleAttrValue.BaseSaleAttrId,
+						SpuId:             spuSaleAttrValue.SpuId,
+					})
+				}
+			}
+
+		}
+	}
+
+	err := mysql.SpuDao.UpdateSpuInfo(newSpu, imageList, spuSaleAttrList, spuSaleAttrValueList)
+	if err != nil {
+		return err
+	}
+	return nil
+}
+
+func (s *spuService) DeleteSpu(spuId int64) error {
+	return mysql.SpuDao.DeleteSpu(spuId)
+}

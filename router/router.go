@@ -92,6 +92,8 @@ func Setup(mode string) *gin.Engine {
 		adminProductGroup.GET("/baseSaleAttrList", controller.SpuController.GetSaleAttrList)
 		adminProductGroup.POST("/saveSpuInfo", controller.SpuController.SaveSpuInfo)
 		adminProductGroup.GET("/:page/:limit", controller.SpuController.GetSpuList)
+		adminProductGroup.POST("/updateSpuInfo", controller.SpuController.UpdateSpuInfo)
+		adminProductGroup.DELETE("/deleteSpu/:id", controller.SpuController.DeleteSpu)
 
 		// 商品 SKU 接口
 		adminProductGroup.GET("/spuImageList/:id", controller.SpuController.GetSpuImageList)

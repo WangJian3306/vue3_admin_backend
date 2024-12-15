@@ -1469,6 +1469,34 @@ paths:
       summary: 更新品牌接口
       tags:
       - 品牌管理
+  /admin/product/deleteSpu/{spuId}:
+    delete:
+      consumes:
+      - application/json
+      description: 处理删除SPU请求
+      parameters:
+      - description: 用户 Token
+        in: header
+        name: token
+        required: true
+        type: string
+      - description: SPU ID
+        in: path
+        name: spuId
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/controller.ResponseData'
+      security:
+      - ApiKeyAuth: []
+      summary: 删除SPU接口
+      tags:
+      - 商品SPU接口
   /admin/product/fileUpload:
     post:
       consumes:
@@ -1690,4 +1718,33 @@ paths:
       summary: 获取商品销售属性列表接口
       tags:
       - 商品SKU接口
+  /admin/product/updateSpuInfo:
+    post:
+      consumes:
+      - application/json
+      description: 更新SPU接口
+      parameters:
+      - description: 用户 Token
+        in: header
+        name: token
+        required: true
+        type: string
+      - description: SPU信息
+        in: body
+        name: object
+        required: true
+        schema:
+          $ref: '#/definitions/model.Spu'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/controller.ResponseData'
+      security:
+      - ApiKeyAuth: []
+      summary: 更新SPU接口
+      tags:
+      - 商品SPU接口
 swagger: "2.0"
