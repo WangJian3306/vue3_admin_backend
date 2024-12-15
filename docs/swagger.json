@@ -969,6 +969,43 @@
                 }
             }
         },
+        "/admin/product/baseSaleAttrList": {
+            "get": {
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
+                "description": "获取所有销售列表",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "商品SPU接口"
+                ],
+                "summary": "获取所有销售列表",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "用户 Token",
+                        "name": "token",
+                        "in": "header",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/controller._ResponseAllSaleAttrList"
+                        }
+                    }
+                }
+            }
+        },
         "/admin/product/baseTrademark/getTrademarkList": {
             "get": {
                 "security": [
@@ -1407,6 +1444,198 @@
                     }
                 }
             }
+        },
+        "/admin/product/saveSpuInfo": {
+            "post": {
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
+                "description": "新增SPU接口",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "商品SPU接口"
+                ],
+                "summary": "新增SPU接口",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "用户 Token",
+                        "name": "token",
+                        "in": "header",
+                        "required": true
+                    },
+                    {
+                        "description": "SPU信息",
+                        "name": "object",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/model.Spu"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/controller.ResponseData"
+                        }
+                    }
+                }
+            }
+        },
+        "/admin/product/spuImageList/{id}": {
+            "get": {
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
+                "description": "处理获取商品图片列表请求",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "商品SKU接口"
+                ],
+                "summary": "获取商品图片列表接口",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "用户 Token",
+                        "name": "token",
+                        "in": "header",
+                        "required": true
+                    },
+                    {
+                        "type": "integer",
+                        "description": "SPU ID",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/controller._ResponseSpuImageList"
+                        }
+                    }
+                }
+            }
+        },
+        "/admin/product/spuSaleAttrList/{id}": {
+            "get": {
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
+                "description": "处理获取商品销售属性列表请求",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "商品SKU接口"
+                ],
+                "summary": "获取商品销售属性列表接口",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "用户 Token",
+                        "name": "token",
+                        "in": "header",
+                        "required": true
+                    },
+                    {
+                        "type": "integer",
+                        "description": "SPU ID",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/controller._ResponseSpuSaleAttrList"
+                        }
+                    }
+                }
+            }
+        },
+        "/admin/product/{page}/{limit}": {
+            "get": {
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
+                "description": "获取SPU分页列表（",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "商品SPU接口"
+                ],
+                "summary": "获取SPU分页列表（",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "用户 Token",
+                        "name": "token",
+                        "in": "header",
+                        "required": true
+                    },
+                    {
+                        "type": "integer",
+                        "description": "当前页码",
+                        "name": "page",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "type": "integer",
+                        "description": "每页记录数",
+                        "name": "limit",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "type": "integer",
+                        "description": "三级分类 ID",
+                        "name": "category3Id",
+                        "in": "query",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/model.ResponseSpuList"
+                        }
+                    }
+                }
+            }
         }
     },
     "definitions": {
@@ -1443,6 +1672,32 @@
                 },
                 "data": {},
                 "message": {},
+                "ok": {
+                    "type": "boolean"
+                }
+            }
+        },
+        "controller._ResponseAllSaleAttrList": {
+            "type": "object",
+            "properties": {
+                "code": {
+                    "description": "业务响应状态码",
+                    "allOf": [
+                        {
+                            "$ref": "#/definitions/controller.ResCode"
+                        }
+                    ]
+                },
+                "data": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/model.SaleAttr"
+                    }
+                },
+                "message": {
+                    "description": "提示信息",
+                    "type": "string"
+                },
                 "ok": {
                     "type": "boolean"
                 }
@@ -1534,6 +1789,58 @@
                 },
                 "data": {
                     "$ref": "#/definitions/model.ResponseRoleList"
+                },
+                "message": {
+                    "description": "提示信息",
+                    "type": "string"
+                },
+                "ok": {
+                    "type": "boolean"
+                }
+            }
+        },
+        "controller._ResponseSpuImageList": {
+            "type": "object",
+            "properties": {
+                "code": {
+                    "description": "业务响应状态码",
+                    "allOf": [
+                        {
+                            "$ref": "#/definitions/controller.ResCode"
+                        }
+                    ]
+                },
+                "data": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/model.SpuImage"
+                    }
+                },
+                "message": {
+                    "description": "提示信息",
+                    "type": "string"
+                },
+                "ok": {
+                    "type": "boolean"
+                }
+            }
+        },
+        "controller._ResponseSpuSaleAttrList": {
+            "type": "object",
+            "properties": {
+                "code": {
+                    "description": "业务响应状态码",
+                    "allOf": [
+                        {
+                            "$ref": "#/definitions/controller.ResCode"
+                        }
+                    ]
+                },
+                "data": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/model.SpuSaleAttr"
+                    }
                 },
                 "message": {
                     "description": "提示信息",
@@ -1987,6 +2294,32 @@
                 }
             }
         },
+        "model.ResponseSpuList": {
+            "type": "object",
+            "properties": {
+                "current": {
+                    "type": "integer"
+                },
+                "pages": {
+                    "type": "integer"
+                },
+                "records": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/model.Spu"
+                    }
+                },
+                "searchCount": {
+                    "type": "boolean"
+                },
+                "size": {
+                    "type": "integer"
+                },
+                "total": {
+                    "type": "integer"
+                }
+            }
+        },
         "model.ResponseTmList": {
             "type": "object",
             "properties": {
@@ -2134,6 +2467,144 @@
                 },
                 "updateTime": {
                     "type": "string"
+                }
+            }
+        },
+        "model.SaleAttr": {
+            "type": "object",
+            "properties": {
+                "ID": {
+                    "type": "integer"
+                },
+                "createTime": {
+                    "type": "string"
+                },
+                "id": {
+                    "description": "销售属性ID",
+                    "type": "integer"
+                },
+                "name": {
+                    "description": "销售属性名称",
+                    "type": "string"
+                },
+                "updateTime": {
+                    "type": "string"
+                }
+            }
+        },
+        "model.SaleAttrValue": {
+            "type": "object",
+            "properties": {
+                "ID": {
+                    "type": "integer"
+                },
+                "baseSaleAttrId": {
+                    "type": "integer"
+                },
+                "createTime": {
+                    "type": "string"
+                },
+                "id": {
+                    "type": "integer"
+                },
+                "saleAttrValueName": {
+                    "type": "string"
+                },
+                "spuId": {
+                    "type": "integer"
+                },
+                "updateTime": {
+                    "type": "string"
+                }
+            }
+        },
+        "model.Spu": {
+            "type": "object",
+            "properties": {
+                "ID": {
+                    "type": "integer"
+                },
+                "category3Id": {
+                    "type": "integer"
+                },
+                "createTime": {
+                    "type": "string"
+                },
+                "description": {
+                    "type": "string"
+                },
+                "id": {
+                    "type": "integer"
+                },
+                "spuImageList": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/model.SpuImage"
+                    }
+                },
+                "spuName": {
+                    "type": "string"
+                },
+                "spuSaleAttrList": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/model.SpuSaleAttr"
+                    }
+                },
+                "tmId": {
+                    "type": "integer"
+                },
+                "updateTime": {
+                    "type": "string"
+                }
+            }
+        },
+        "model.SpuImage": {
+            "type": "object",
+            "properties": {
+                "ID": {
+                    "type": "integer"
+                },
+                "createTime": {
+                    "type": "string"
+                },
+                "id": {
+                    "type": "integer"
+                },
+                "imgName": {
+                    "type": "string"
+                },
+                "imgUrl": {
+                    "type": "string"
+                },
+                "spuId": {
+                    "type": "integer"
+                },
+                "updateTime": {
+                    "type": "string"
+                }
+            }
+        },
+        "model.SpuSaleAttr": {
+            "type": "object",
+            "properties": {
+                "baseSaleAttrId": {
+                    "type": "integer"
+                },
+                "id": {
+                    "type": "integer"
+                },
+                "saleAttrName": {
+                    "type": "string"
+                },
+                "spuId": {
+                    "type": "integer"
+                },
+                "spuSaleAttrValueList": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/model.SaleAttrValue"
+                    }
                 }
             }
         },

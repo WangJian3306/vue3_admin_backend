@@ -1,5 +1,21 @@
 basePath: /
 definitions:
+  controller._ResponseAllSaleAttrList:
+    properties:
+      code:
+        allOf:
+        - $ref: '#/definitions/controller.ResCode'
+        description: 业务响应状态码
+      data:
+        items:
+          $ref: '#/definitions/model.SaleAttr'
+        type: array
+      message:
+        description: 提示信息
+        type: string
+      ok:
+        type: boolean
+    type: object
   controller._ResponseAllTmList:
     properties:
       code:
@@ -53,6 +69,38 @@ definitions:
         description: 业务响应状态码
       data:
         $ref: '#/definitions/model.ResponseRoleList'
+      message:
+        description: 提示信息
+        type: string
+      ok:
+        type: boolean
+    type: object
+  controller._ResponseSpuImageList:
+    properties:
+      code:
+        allOf:
+        - $ref: '#/definitions/controller.ResCode'
+        description: 业务响应状态码
+      data:
+        items:
+          $ref: '#/definitions/model.SpuImage'
+        type: array
+      message:
+        description: 提示信息
+        type: string
+      ok:
+        type: boolean
+    type: object
+  controller._ResponseSpuSaleAttrList:
+    properties:
+      code:
+        allOf:
+        - $ref: '#/definitions/controller.ResCode'
+        description: 业务响应状态码
+      data:
+        items:
+          $ref: '#/definitions/model.SpuSaleAttr'
+        type: array
       message:
         description: 提示信息
         type: string
@@ -380,6 +428,23 @@ definitions:
       total:
         type: integer
     type: object
+  model.ResponseSpuList:
+    properties:
+      current:
+        type: integer
+      pages:
+        type: integer
+      records:
+        items:
+          $ref: '#/definitions/model.Spu'
+        type: array
+      searchCount:
+        type: boolean
+      size:
+        type: integer
+      total:
+        type: integer
+    type: object
   model.ResponseTmList:
     properties:
       current:
@@ -477,6 +542,97 @@ definitions:
         type: string
       updateTime:
         type: string
+    type: object
+  model.SaleAttr:
+    properties:
+      ID:
+        type: integer
+      createTime:
+        type: string
+      id:
+        description: 销售属性ID
+        type: integer
+      name:
+        description: 销售属性名称
+        type: string
+      updateTime:
+        type: string
+    type: object
+  model.SaleAttrValue:
+    properties:
+      ID:
+        type: integer
+      baseSaleAttrId:
+        type: integer
+      createTime:
+        type: string
+      id:
+        type: integer
+      saleAttrValueName:
+        type: string
+      spuId:
+        type: integer
+      updateTime:
+        type: string
+    type: object
+  model.Spu:
+    properties:
+      ID:
+        type: integer
+      category3Id:
+        type: integer
+      createTime:
+        type: string
+      description:
+        type: string
+      id:
+        type: integer
+      spuImageList:
+        items:
+          $ref: '#/definitions/model.SpuImage'
+        type: array
+      spuName:
+        type: string
+      spuSaleAttrList:
+        items:
+          $ref: '#/definitions/model.SpuSaleAttr'
+        type: array
+      tmId:
+        type: integer
+      updateTime:
+        type: string
+    type: object
+  model.SpuImage:
+    properties:
+      ID:
+        type: integer
+      createTime:
+        type: string
+      id:
+        type: integer
+      imgName:
+        type: string
+      imgUrl:
+        type: string
+      spuId:
+        type: integer
+      updateTime:
+        type: string
+    type: object
+  model.SpuSaleAttr:
+    properties:
+      baseSaleAttrId:
+        type: integer
+      id:
+        type: integer
+      saleAttrName:
+        type: string
+      spuId:
+        type: integer
+      spuSaleAttrValueList:
+        items:
+          $ref: '#/definitions/model.SaleAttrValue'
+        type: array
     type: object
   model.Trademark:
     properties:
@@ -1072,6 +1228,44 @@ paths:
       summary: 删除基础属性接口
       tags:
       - 商品基础属性接口
+  /admin/product/{page}/{limit}:
+    get:
+      consumes:
+      - application/json
+      description: 获取SPU分页列表（
+      parameters:
+      - description: 用户 Token
+        in: header
+        name: token
+        required: true
+        type: string
+      - description: 当前页码
+        in: path
+        name: page
+        required: true
+        type: integer
+      - description: 每页记录数
+        in: path
+        name: limit
+        required: true
+        type: integer
+      - description: 三级分类 ID
+        in: query
+        name: category3Id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model.ResponseSpuList'
+      security:
+      - ApiKeyAuth: []
+      summary: 获取SPU分页列表（
+      tags:
+      - 商品SPU接口
   /admin/product/attrInfoList/{c1Id}/{c2Id}/{c3Id}:
     get:
       consumes:
@@ -1110,6 +1304,29 @@ paths:
       summary: 获取分类下已有的属性与属性值接口
       tags:
       - 商品基础属性接口
+  /admin/product/baseSaleAttrList:
+    get:
+      consumes:
+      - application/json
+      description: 获取所有销售列表
+      parameters:
+      - description: 用户 Token
+        in: header
+        name: token
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/controller._ResponseAllSaleAttrList'
+      security:
+      - ApiKeyAuth: []
+      summary: 获取所有销售列表
+      tags:
+      - 商品SPU接口
   /admin/product/baseTrademark/{page}/{limit}:
     get:
       consumes:
@@ -1388,4 +1605,89 @@ paths:
       summary: 添加或者修改已有的属性的接口
       tags:
       - 商品基础属性接口
+  /admin/product/saveSpuInfo:
+    post:
+      consumes:
+      - application/json
+      description: 新增SPU接口
+      parameters:
+      - description: 用户 Token
+        in: header
+        name: token
+        required: true
+        type: string
+      - description: SPU信息
+        in: body
+        name: object
+        required: true
+        schema:
+          $ref: '#/definitions/model.Spu'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/controller.ResponseData'
+      security:
+      - ApiKeyAuth: []
+      summary: 新增SPU接口
+      tags:
+      - 商品SPU接口
+  /admin/product/spuImageList/{id}:
+    get:
+      consumes:
+      - application/json
+      description: 处理获取商品图片列表请求
+      parameters:
+      - description: 用户 Token
+        in: header
+        name: token
+        required: true
+        type: string
+      - description: SPU ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/controller._ResponseSpuImageList'
+      security:
+      - ApiKeyAuth: []
+      summary: 获取商品图片列表接口
+      tags:
+      - 商品SKU接口
+  /admin/product/spuSaleAttrList/{id}:
+    get:
+      consumes:
+      - application/json
+      description: 处理获取商品销售属性列表请求
+      parameters:
+      - description: 用户 Token
+        in: header
+        name: token
+        required: true
+        type: string
+      - description: SPU ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/controller._ResponseSpuSaleAttrList'
+      security:
+      - ApiKeyAuth: []
+      summary: 获取商品销售属性列表接口
+      tags:
+      - 商品SKU接口
 swagger: "2.0"

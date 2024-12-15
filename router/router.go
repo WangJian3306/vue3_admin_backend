@@ -87,6 +87,15 @@ func Setup(mode string) *gin.Engine {
 		adminProductGroup.POST("/saveAttrInfo", controller.AttrController.SaveAttrInfo)
 		adminProductGroup.GET("/attrInfoList/:c1Id/:c2Id/:c3Id", controller.AttrController.GetAttr)
 		adminProductGroup.DELETE("/deleteAttr/:attrId", controller.AttrController.DeleteAttr)
+
+		// 商品 SPU 接口
+		adminProductGroup.GET("/baseSaleAttrList", controller.SpuController.GetSaleAttrList)
+		adminProductGroup.POST("/saveSpuInfo", controller.SpuController.SaveSpuInfo)
+		adminProductGroup.GET("/:page/:limit", controller.SpuController.GetSpuList)
+
+		// 商品 SKU 接口
+		adminProductGroup.GET("/spuImageList/:id", controller.SpuController.GetSpuImageList)
+		adminProductGroup.GET("/spuSaleAttrList/:id", controller.SpuController.GetSpuSaleAttrList)
 	}
 
 	r.NoRoute(func(c *gin.Context) {

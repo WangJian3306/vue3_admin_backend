@@ -146,7 +146,7 @@ func (a *attrDao) InsertAttrAndAttrValue(attr *model.Attr) (err error) {
 		return err
 	}
 
-	_, err = tx.NamedExec(
+	rs, err = tx.NamedExec(
 		"INSERT INTO attr_value (attr_value_id, value_name, attr_id) VALUES (:attr_value_id,:value_name,:attr_id)",
 		attr.AttrValueList,
 	)

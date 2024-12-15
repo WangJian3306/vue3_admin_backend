@@ -151,6 +151,7 @@ func (*trademarkController) GetAllTrademarkList(c *gin.Context) {
 	if err != nil {
 		zap.L().Error("service.TrademarkService.GetAllTrademarkList() failed", zap.Error(err))
 		ResponseError(c, CodeServerBusy)
+		return
 	}
 	ResponseSuccess(c, data)
 }

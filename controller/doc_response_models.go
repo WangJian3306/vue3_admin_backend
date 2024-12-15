@@ -64,3 +64,18 @@ type _ResponseAllTmList struct {
 	_BaseResponse
 	Data []model.Trademark `json:"data"`
 }
+
+type _ResponseAllSaleAttrList struct {
+	_BaseResponse
+	Data []model.SaleAttr `json:"data"`
+}
+
+type _ResponseSpuImageList struct {
+	_BaseResponse
+	Data []model.SpuImage `json:"data"`
+}
+
+type _ResponseSpuSaleAttrList struct {
+	_BaseResponse
+	Data []model.SpuSaleAttr `json:"data"`
+}
