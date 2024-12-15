@@ -122,11 +122,12 @@ func (s *spuService) UpdateSpuInfo(spu *model.Spu) error {
 	imageList := make([]*model.SpuImage, 0, 2)
 	if len(spu.SpuImageList) > 0 {
 		for _, image := range spu.SpuImageList {
+			imageId := snowflake.GenID()
 			imageList = append(imageList, &model.SpuImage{
-				ImageID:   image.ImageID,
+				ImageID:   imageId,
 				ImageName: image.ImageName,
 				ImageUrl:  image.ImageUrl,
-				SpuID:     image.SpuID,
+				SpuID:     spu.SpuID,
 			})
 		}
 	}
@@ -135,11 +136,12 @@ func (s *spuService) UpdateSpuInfo(spu *model.Spu) error {
 	spuSaleAttrList := make([]*model.SpuSaleAttr, 0, 2)
 	if len(spu.SpuSaleAttrList) > 0 {
 		for _, spuSaleAttr := range spu.SpuSaleAttrList {
+			spuSaleAttrId := snowflake.GenID()
 			spuSaleAttrList = append(spuSaleAttrList, &model.SpuSaleAttr{
-				SpuSaleAttrID:  spuSaleAttr.SpuSaleAttrID,
+				SpuSaleAttrID:  spuSaleAttrId,
 				BaseSaleAttrId: spuSaleAttr.BaseSaleAttrId,
 				SaleAttrName:   spuSaleAttr.SaleAttrName,
-				SpuId:          spuSaleAttr.SpuId,
+				SpuId:          spu.SpuID,
 			})
 		}
 	}
@@ -150,11 +152,12 @@ func (s *spuService) UpdateSpuInfo(spu *model.Spu) error {
 		for _, spuSaleAttr := range spu.SpuSaleAttrList {
 			if spuSaleAttr.SpuSaleAttrValue != nil && len(spuSaleAttr.SpuSaleAttrValue) > 0 {
 				for _, spuSaleAttrValue := range spuSaleAttr.SpuSaleAttrValue {
+					saleAttrValueId := snowflake.GenID()
 					spuSaleAttrValueList = append(spuSaleAttrValueList, &model.SaleAttrValue{
-						SaleAttrValueID:   spuSaleAttrValue.SaleAttrValueID,
+						SaleAttrValueID:   saleAttrValueId,
 						SaleAttrValueName: spuSaleAttrValue.SaleAttrValueName,
 						BaseSaleAttrId:    spuSaleAttrValue.BaseSaleAttrId,
-						SpuId:             spuSaleAttrValue.SpuId,
+						SpuId:             spu.SpuID,
 					})
 				}
 			}
