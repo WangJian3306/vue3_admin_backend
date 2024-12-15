@@ -1,6 +1,6 @@
 # 硅谷甄选前端项目后端 API
 
-使用 Golang 实现的硅谷甄选后端 API，目前实现的API信息如下，还有**15**个API没有实现（主要是 SPU 和 SKU 页面），欢迎大家添砖加瓦。
+使用 Golang 实现的硅谷甄选后端 API，目前实现的API信息如下，还有**7**个API没有实现（主要 SKU 接口），欢迎大家添砖加瓦。
 
 ## 已实现的 API
 
@@ -64,6 +64,8 @@
 - [X] 获取SPU分页列表（/admin/product/{page}/{limit}
 - [X] 获取全部销售属性（/admin/product/baseSaleAttrList）
 - [X] 新增SPU（/admin/product/saveSpuInfo）
+- [X] 更新SPU（/admin/product/updateSpuInfo）
+- [X] 删除SPU（/admin/product/deleteSpu/{spuId}）
 
 ### 商品 SKU 接口
 
@@ -71,12 +73,6 @@
 - [X] 获取某个SPU下的全部的已有的销售属性接口（/admin/product/spuSaleAttrList/{spuId
 
 ## 未实现的 API
-
-### 商品 SPU 接口
-
-- [ ] 更新SPU（/admin/product/updateSpuInfo）
-- [ ] 删除SPU（/admin/product/deleteSpu/{spuId}）
-
 
 ### 商品 SKU 接口
 
