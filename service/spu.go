@@ -77,6 +77,9 @@ func (s *spuService) SaveSpuInfo(p *model.Spu) (err error) {
 
 func (s *spuService) GetSpuList(c3Id, page, limit int64) (spu *model.ResponseSpuList, err error) {
 	spuList, count, err := mysql.SpuDao.GetSpuList(c3Id, page, limit)
+	if err != nil {
+		return nil, err
+	}
 
 	spu = &model.ResponseSpuList{
 		Records:     spuList,

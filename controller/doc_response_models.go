@@ -79,3 +79,8 @@ type _ResponseSpuSaleAttrList struct {
 	_BaseResponse
 	Data []model.SpuSaleAttr `json:"data"`
 }
+
+type _ResponseSkuFindBySpuId struct {
+	_BaseResponse
+	Data []model.ResponseSkuInfo `json:"data"`
+}

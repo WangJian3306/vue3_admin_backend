@@ -1,6 +1,6 @@
 # 硅谷甄选前端项目后端 API
 
-使用 Golang 实现的硅谷甄选后端 API，目前实现的API信息如下，还有**7**个API没有实现（主要 SKU 接口），欢迎大家添砖加瓦。
+使用 Golang 实现的硅谷甄选后端 API，已实现老师上课使用的所有 API，欢迎大家提提建议。
 
 ## 已实现的 API
 
@@ -70,63 +70,63 @@
 ### 商品 SKU 接口
 
 - [X] 获取某个SPU下的全部的售卖商品的图片数据（/admin/product/spuImageList/{spuId}）
-- [X] 获取某个SPU下的全部的已有的销售属性接口（/admin/product/spuSaleAttrList/{spuId
+- [X] 获取某个SPU下的全部的已有的销售属性接口（/admin/product/spuSaleAttrList/{spuId})
+- [X] 新增SKU（/admin/product/saveSkuInfo）
+- [X] 根据SPU ID查询SKU（/admin/product/findBySpuId/{spuId}）
+- [X] 获取商品 SKU 分页列表（/admin/product/list/{page}/{limit}）
+- [X] 商品上架接口（/admin/product/onSale/{skuId}）
+- [X] 商品下架接口（/admin/product/cancelSale/{skuId}）
+- [X] 商品详情接口（/admin/product/getSkuInfo/{skuId}）
+- [X] 删除商品接口（/admin/product/deleteSKU/{skuId})
 
-## 未实现的 API
-
-### 商品 SKU 接口
-
-- [ ] 新增SKU（/admin/product/saveSkuInfo）
-- [ ] 根据SPU ID查询SKU（/admin/product/findBySpuId/{spuId}）
-- [ ] 获取商品 SKU 分页列表（/admin/product/list/{page}/{limit}）
-- [ ] 商品上架接口（/admin/product/onSale/{skuId}）
-- [ ] 商品下架接口（/admin/product/cancelSale/{skuId}）
-- [ ] 商品详情接口（/admin/product/getSkuInfo/{skuId}）
-- [ ] 删除商品接口（/admin/product/deleteSKU/{skuId})
 
 ## 不同
 
 已知的和老师前端实现不同地方如下，其它地方同学如果发现和老师的不同，请参考[我实现的前端代码](https://github.com/WangJian3306/vue3_admin_template.git)进行调整。
 
-1. 文件上传接口`/admin/product/fileUpload`
+1. 本项目实现所有 API 接口都是进行`Token`验证的。
 
-本项目实现的文件上传接口需要验证`Token`，`<el-upload>` 组件上传时，需使用`headers`属性携带`Token`请求头。
+   老师上课实现的路由守卫已经自动全部都带了`Token`，不用担心。在使用`swagger`时需要先登录结果获取`token`，稍微麻烦些。
 
-```html
-<template>
-    <el-upload action="/admin/product/fileUpload" :headers="headers"></el-upload>
-</template>
-<script setup>
-    // el-upload 上传 http 请求头，携带 Token 
-    // 引入用户相关的仓库
-    import useUserStore from '@/store/modules/user'
-    // 获取用户相关的小仓库：获取仓库内部token，登录成功以后携带给服务器
-    const userStore = useUserStore()
-    const headers = {Token: userStore.token}
-</script>
-```
+2. 文件上传接口`/admin/product/fileUpload`
 
-2. 前端`SaleAttr interface`中的`baseSaleAttrId`字段数据类型为`number`，页面使用不兼容时使用`Number()`进行数据类型转换
+   本项目实现的文件上传接口需要验证`Token`，`<el-upload>` 组件上传时，需使用`headers`属性携带`Token`请求头。
    
-```javascript
-// 销售属性对象
-export interface SaleAttr {
-  id?: number
-  spuId?: number
-  baseSaleAttrId: number // 这里是 number，没有 string
-  saleAttrName: string
-  spuSaleAttrValueList: SpuSaleAttrValueList
-  flag?: boolean
-  saleAttrValue?: string
-}
+   ```html
+   <template>
+       <el-upload action="/admin/product/fileUpload" :headers="headers"></el-upload>
+   </template>
+   <script setup>
+       // el-upload 上传 http 请求头，携带 Token 
+       // 引入用户相关的仓库
+       import useUserStore from '@/store/modules/user'
+       // 获取用户相关的小仓库：获取仓库内部token，登录成功以后携带给服务器
+       const userStore = useUserStore()
+       const headers = {Token: userStore.token}
+   </script>
+   ```
 
-// 准备一个新的销售属性对象：将来带给服务器即可
-let newSaleAtrr: SaleAttr = {
-   baseSaleAttrId: Number(baseSaleAttrId), // 这里是使用 Number() 进行数据类型转换
-   saleAttrName,
-   spuSaleAttrValueList: [],
-}
-```
+3. 前端`SaleAttr interface`中的`baseSaleAttrId`字段数据类型为`number`，页面使用不兼容时使用`Number()`进行数据类型转换
+   
+   ```javascript
+   // 销售属性对象
+   export interface SaleAttr {
+     id?: number
+     spuId?: number
+     baseSaleAttrId: number // 这里是 number，没有 string
+     saleAttrName: string
+     spuSaleAttrValueList: SpuSaleAttrValueList
+     flag?: boolean
+     saleAttrValue?: string
+   }
+   
+   // 准备一个新的销售属性对象：将来带给服务器即可
+   let newSaleAtrr: SaleAttr = {
+      baseSaleAttrId: Number(baseSaleAttrId), // 这里是使用 Number() 进行数据类型转换
+      saleAttrName,
+      spuSaleAttrValueList: [],
+   }
+   ```
 
 ## 如何使用
 

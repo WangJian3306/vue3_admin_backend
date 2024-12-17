@@ -86,7 +86,7 @@ func (s *spuDao) SaveSpuInfo(spu *model.Spu, imageList []*model.SpuImage, spuSal
 }
 
 func (s *spuDao) GetSpuList(c3Id, page, limit int64) ([]*model.Spu, int64, error) {
-	countSqlStr := `SELECT count(tm_id) from spu`
+	countSqlStr := `SELECT count(spu_id) from spu`
 	var count int64
 	if err := db.Get(&count, countSqlStr); err != nil {
 		return nil, 0, err
@@ -244,6 +244,13 @@ func (s *spuDao) DeleteSpu(spuId int64) error {
 
 	// 删除 SPU
 	rs, err := tx.Exec("DELETE FROM spu WHERE spu_id = ?", spuId)
+	if err != nil {
+		return err
+	}
+	_, err = rs.RowsAffected()
+	if err != nil {
+		return err
+	}
 
 	// 删除图片列表
 	rs, err = tx.Exec("DELETE FROM spu_image_list WHERE spu_id = ?", spuId)

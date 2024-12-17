@@ -75,6 +75,22 @@ definitions:
       ok:
         type: boolean
     type: object
+  controller._ResponseSkuFindBySpuId:
+    properties:
+      code:
+        allOf:
+        - $ref: '#/definitions/controller.ResCode'
+        description: 业务响应状态码
+      data:
+        items:
+          $ref: '#/definitions/model.ResponseSkuInfo'
+        type: array
+      message:
+        description: 提示信息
+        type: string
+      ok:
+        type: boolean
+    type: object
   controller._ResponseSpuImageList:
     properties:
       code:
@@ -428,6 +444,64 @@ definitions:
       total:
         type: integer
     type: object
+  model.ResponseSkuInfo:
+    properties:
+      ID:
+        type: integer
+      category3Id:
+        type: integer
+      createTime:
+        type: string
+      id:
+        type: integer
+      isSale:
+        type: integer
+      price:
+        type: integer
+      skuAttrValueList:
+        items:
+          $ref: '#/definitions/model.SkuAttrValue'
+        type: array
+      skuDefaultImg:
+        type: string
+      skuDesc:
+        type: string
+      skuImageList:
+        items:
+          $ref: '#/definitions/model.SkuImg'
+        type: array
+      skuName:
+        type: string
+      skuSaleAttrValueList:
+        items:
+          $ref: '#/definitions/model.SkuSaleAttrValue'
+        type: array
+      spuID:
+        type: integer
+      tmId:
+        type: integer
+      updateTime:
+        type: string
+      weight:
+        type: integer
+    type: object
+  model.ResponseSkuInfoList:
+    properties:
+      current:
+        type: integer
+      pages:
+        type: integer
+      records:
+        items:
+          $ref: '#/definitions/model.ResponseSkuInfo'
+        type: array
+      searchCount:
+        type: boolean
+      size:
+        type: integer
+      total:
+        type: integer
+    type: object
   model.ResponseSpuList:
     properties:
       current:
@@ -571,6 +645,74 @@ definitions:
       saleAttrValueName:
         type: string
       spuId:
+        type: integer
+      updateTime:
+        type: string
+    type: object
+  model.SkuAttrValue:
+    properties:
+      ID:
+        type: integer
+      attrId:
+        description: 平台属性ID
+        type: integer
+      attrName:
+        type: string
+      createTime:
+        type: string
+      id:
+        type: integer
+      skuId:
+        type: integer
+      updateTime:
+        type: string
+      valueId:
+        description: 属性值ID
+        type: integer
+      valueName:
+        type: string
+    type: object
+  model.SkuImg:
+    properties:
+      ID:
+        type: integer
+      createTime:
+        type: string
+      id:
+        type: integer
+      imgName:
+        type: string
+      imgUrl:
+        type: string
+      isDefault:
+        type: string
+      skuId:
+        type: integer
+      spuImgId:
+        type: integer
+      updateTime:
+        type: string
+    type: object
+  model.SkuInfo:
+    type: object
+  model.SkuSaleAttrValue:
+    properties:
+      ID:
+        type: integer
+      createTime:
+        type: string
+      id:
+        type: integer
+      saleAttrId:
+        description: 销售属性ID
+        type: integer
+      saleAttrName:
+        type: string
+      saleAttrValueId:
+        type: integer
+      saleAttrValueName:
+        type: string
+      skuId:
         type: integer
       updateTime:
         type: string
@@ -1469,6 +1611,62 @@ paths:
       summary: 更新品牌接口
       tags:
       - 品牌管理
+  /admin/product/cancelSale/{skuId}:
+    get:
+      consumes:
+      - application/json
+      description: 处理下架SKU请求
+      parameters:
+      - description: 用户 Token
+        in: header
+        name: token
+        required: true
+        type: string
+      - description: SKU ID
+        in: path
+        name: skuId
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/controller.ResponseData'
+      security:
+      - ApiKeyAuth: []
+      summary: 下架SKU接口
+      tags:
+      - 商品SKU接口
+  /admin/product/deleteSku/{skuId}:
+    delete:
+      consumes:
+      - application/json
+      description: 处理删除SKU请求
+      parameters:
+      - description: 用户 Token
+        in: header
+        name: token
+        required: true
+        type: string
+      - description: SKU ID
+        in: path
+        name: skuId
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/controller.ResponseData'
+      security:
+      - ApiKeyAuth: []
+      summary: 删除SKU接口
+      tags:
+      - 商品SKU接口
   /admin/product/deleteSpu/{spuId}:
     delete:
       consumes:
@@ -1525,6 +1723,34 @@ paths:
       summary: 上传文件接口
       tags:
       - 上传文件
+  /admin/product/findBySpuId/{spuId}:
+    get:
+      consumes:
+      - application/json
+      description: 处理根据 SPU ID 查询 SKU列表请求
+      parameters:
+      - description: 用户 Token
+        in: header
+        name: token
+        required: true
+        type: string
+      - description: SPU ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/controller._ResponseSkuFindBySpuId'
+      security:
+      - ApiKeyAuth: []
+      summary: 根据 SPU ID 查询 SKU 接口
+      tags:
+      - 商品SKU接口
   /admin/product/getCategory1:
     get:
       consumes:
@@ -1604,6 +1830,67 @@ paths:
       summary: 获取三级分类接口
       tags:
       - 商品分类接口
+  /admin/product/list/{page}/{limit}:
+    get:
+      consumes:
+      - application/json
+      description: 获取SKU分页列表（
+      parameters:
+      - description: 用户 Token
+        in: header
+        name: token
+        required: true
+        type: string
+      - description: 当前页码
+        in: path
+        name: page
+        required: true
+        type: integer
+      - description: 每页记录数
+        in: path
+        name: limit
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model.ResponseSkuInfoList'
+      security:
+      - ApiKeyAuth: []
+      summary: 获取SKU分页列表（
+      tags:
+      - 商品SKU接口
+  /admin/product/onSale/{skuId}:
+    get:
+      consumes:
+      - application/json
+      description: 处理上架SKU请求
+      parameters:
+      - description: 用户 Token
+        in: header
+        name: token
+        required: true
+        type: string
+      - description: SKU ID
+        in: path
+        name: skuId
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/controller.ResponseData'
+      security:
+      - ApiKeyAuth: []
+      summary: 上架SKU接口
+      tags:
+      - 商品SKU接口
   /admin/product/saveAttrInfo:
     post:
       consumes:
@@ -1633,6 +1920,35 @@ paths:
       summary: 添加或者修改已有的属性的接口
       tags:
       - 商品基础属性接口
+  /admin/product/saveSkuInfo:
+    post:
+      consumes:
+      - application/json
+      description: 新增SKU接口
+      parameters:
+      - description: 用户 Token
+        in: header
+        name: token
+        required: true
+        type: string
+      - description: SKU信息
+        in: body
+        name: object
+        required: true
+        schema:
+          $ref: '#/definitions/model.SkuInfo'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/controller.ResponseData'
+      security:
+      - ApiKeyAuth: []
+      summary: 新增SKU接口
+      tags:
+      - 商品SKU接口
   /admin/product/saveSpuInfo:
     post:
       consumes:

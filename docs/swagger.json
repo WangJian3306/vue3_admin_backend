@@ -1230,6 +1230,94 @@
                 }
             }
         },
+        "/admin/product/cancelSale/{skuId}": {
+            "get": {
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
+                "description": "处理下架SKU请求",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "商品SKU接口"
+                ],
+                "summary": "下架SKU接口",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "用户 Token",
+                        "name": "token",
+                        "in": "header",
+                        "required": true
+                    },
+                    {
+                        "type": "integer",
+                        "description": "SKU ID",
+                        "name": "skuId",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/controller.ResponseData"
+                        }
+                    }
+                }
+            }
+        },
+        "/admin/product/deleteSku/{skuId}": {
+            "delete": {
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
+                "description": "处理删除SKU请求",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "商品SKU接口"
+                ],
+                "summary": "删除SKU接口",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "用户 Token",
+                        "name": "token",
+                        "in": "header",
+                        "required": true
+                    },
+                    {
+                        "type": "integer",
+                        "description": "SKU ID",
+                        "name": "skuId",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/controller.ResponseData"
+                        }
+                    }
+                }
+            }
+        },
         "/admin/product/deleteSpu/{spuId}": {
             "delete": {
                 "security": [
@@ -1313,6 +1401,50 @@
                         "description": "OK",
                         "schema": {
                             "$ref": "#/definitions/controller.ResponseData"
+                        }
+                    }
+                }
+            }
+        },
+        "/admin/product/findBySpuId/{spuId}": {
+            "get": {
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
+                "description": "处理根据 SPU ID 查询 SKU列表请求",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "商品SKU接口"
+                ],
+                "summary": "根据 SPU ID 查询 SKU 接口",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "用户 Token",
+                        "name": "token",
+                        "in": "header",
+                        "required": true
+                    },
+                    {
+                        "type": "integer",
+                        "description": "SPU ID",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/controller._ResponseSkuFindBySpuId"
                         }
                     }
                 }
@@ -1443,6 +1575,101 @@
                 }
             }
         },
+        "/admin/product/list/{page}/{limit}": {
+            "get": {
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
+                "description": "获取SKU分页列表（",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "商品SKU接口"
+                ],
+                "summary": "获取SKU分页列表（",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "用户 Token",
+                        "name": "token",
+                        "in": "header",
+                        "required": true
+                    },
+                    {
+                        "type": "integer",
+                        "description": "当前页码",
+                        "name": "page",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "type": "integer",
+                        "description": "每页记录数",
+                        "name": "limit",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/model.ResponseSkuInfoList"
+                        }
+                    }
+                }
+            }
+        },
+        "/admin/product/onSale/{skuId}": {
+            "get": {
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
+                "description": "处理上架SKU请求",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "商品SKU接口"
+                ],
+                "summary": "上架SKU接口",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "用户 Token",
+                        "name": "token",
+                        "in": "header",
+                        "required": true
+                    },
+                    {
+                        "type": "integer",
+                        "description": "SKU ID",
+                        "name": "skuId",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/controller.ResponseData"
+                        }
+                    }
+                }
+            }
+        },
         "/admin/product/saveAttrInfo": {
             "post": {
                 "security": [
@@ -1476,6 +1703,52 @@
                         "required": true,
                         "schema": {
                             "$ref": "#/definitions/model.Attr"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/controller.ResponseData"
+                        }
+                    }
+                }
+            }
+        },
+        "/admin/product/saveSkuInfo": {
+            "post": {
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
+                "description": "新增SKU接口",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "商品SKU接口"
+                ],
+                "summary": "新增SKU接口",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "用户 Token",
+                        "name": "token",
+                        "in": "header",
+                        "required": true
+                    },
+                    {
+                        "description": "SKU信息",
+                        "name": "object",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/model.SkuInfo"
                         }
                     }
                 ],
@@ -1879,6 +2152,32 @@
                 },
                 "data": {
                     "$ref": "#/definitions/model.ResponseRoleList"
+                },
+                "message": {
+                    "description": "提示信息",
+                    "type": "string"
+                },
+                "ok": {
+                    "type": "boolean"
+                }
+            }
+        },
+        "controller._ResponseSkuFindBySpuId": {
+            "type": "object",
+            "properties": {
+                "code": {
+                    "description": "业务响应状态码",
+                    "allOf": [
+                        {
+                            "$ref": "#/definitions/controller.ResCode"
+                        }
+                    ]
+                },
+                "data": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/model.ResponseSkuInfo"
+                    }
                 },
                 "message": {
                     "description": "提示信息",
@@ -2384,6 +2683,94 @@
                 }
             }
         },
+        "model.ResponseSkuInfo": {
+            "type": "object",
+            "properties": {
+                "ID": {
+                    "type": "integer"
+                },
+                "category3Id": {
+                    "type": "integer"
+                },
+                "createTime": {
+                    "type": "string"
+                },
+                "id": {
+                    "type": "integer"
+                },
+                "isSale": {
+                    "type": "integer"
+                },
+                "price": {
+                    "type": "integer"
+                },
+                "skuAttrValueList": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/model.SkuAttrValue"
+                    }
+                },
+                "skuDefaultImg": {
+                    "type": "string"
+                },
+                "skuDesc": {
+                    "type": "string"
+                },
+                "skuImageList": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/model.SkuImg"
+                    }
+                },
+                "skuName": {
+                    "type": "string"
+                },
+                "skuSaleAttrValueList": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/model.SkuSaleAttrValue"
+                    }
+                },
+                "spuID": {
+                    "type": "integer"
+                },
+                "tmId": {
+                    "type": "integer"
+                },
+                "updateTime": {
+                    "type": "string"
+                },
+                "weight": {
+                    "type": "integer"
+                }
+            }
+        },
+        "model.ResponseSkuInfoList": {
+            "type": "object",
+            "properties": {
+                "current": {
+                    "type": "integer"
+                },
+                "pages": {
+                    "type": "integer"
+                },
+                "records": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/model.ResponseSkuInfo"
+                    }
+                },
+                "searchCount": {
+                    "type": "boolean"
+                },
+                "size": {
+                    "type": "integer"
+                },
+                "total": {
+                    "type": "integer"
+                }
+            }
+        },
         "model.ResponseSpuList": {
             "type": "object",
             "properties": {
@@ -2601,6 +2988,108 @@
                     "type": "string"
                 },
                 "spuId": {
+                    "type": "integer"
+                },
+                "updateTime": {
+                    "type": "string"
+                }
+            }
+        },
+        "model.SkuAttrValue": {
+            "type": "object",
+            "properties": {
+                "ID": {
+                    "type": "integer"
+                },
+                "attrId": {
+                    "description": "平台属性ID",
+                    "type": "integer"
+                },
+                "attrName": {
+                    "type": "string"
+                },
+                "createTime": {
+                    "type": "string"
+                },
+                "id": {
+                    "type": "integer"
+                },
+                "skuId": {
+                    "type": "integer"
+                },
+                "updateTime": {
+                    "type": "string"
+                },
+                "valueId": {
+                    "description": "属性值ID",
+                    "type": "integer"
+                },
+                "valueName": {
+                    "type": "string"
+                }
+            }
+        },
+        "model.SkuImg": {
+            "type": "object",
+            "properties": {
+                "ID": {
+                    "type": "integer"
+                },
+                "createTime": {
+                    "type": "string"
+                },
+                "id": {
+                    "type": "integer"
+                },
+                "imgName": {
+                    "type": "string"
+                },
+                "imgUrl": {
+                    "type": "string"
+                },
+                "isDefault": {
+                    "type": "string"
+                },
+                "skuId": {
+                    "type": "integer"
+                },
+                "spuImgId": {
+                    "type": "integer"
+                },
+                "updateTime": {
+                    "type": "string"
+                }
+            }
+        },
+        "model.SkuInfo": {
+            "type": "object"
+        },
+        "model.SkuSaleAttrValue": {
+            "type": "object",
+            "properties": {
+                "ID": {
+                    "type": "integer"
+                },
+                "createTime": {
+                    "type": "string"
+                },
+                "id": {
+                    "type": "integer"
+                },
+                "saleAttrId": {
+                    "description": "销售属性ID",
+                    "type": "integer"
+                },
+                "saleAttrName": {
+                    "type": "string"
+                },
+                "saleAttrValueId": {
+                    "type": "integer"
+                },
+                "saleAttrValueName": {
+                    "type": "string"
+                },
+                "skuId": {
                     "type": "integer"
                 },
                 "updateTime": {

@@ -313,7 +313,7 @@ CREATE TABLE `sale_attr_value` (
   PRIMARY KEY (`id`),
   KEY `idx_sale_attr_value_name` (`sale_attr_value_name`) USING BTREE,
   KEY `idx_sale_attr_value_id` (`sale_attr_value_id`) USING BTREE
-) ENGINE=InnoDB AUTO_INCREMENT=19 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=27 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -322,8 +322,127 @@ CREATE TABLE `sale_attr_value` (
 
 LOCK TABLES `sale_attr_value` WRITE;
 /*!40000 ALTER TABLE `sale_attr_value` DISABLE KEYS */;
-INSERT INTO `sale_attr_value` VALUES (3,9307314958468,'蓝色',1,9307314958464,'2024-12-15 04:46:14','2024-12-15 04:46:14'),(4,9307314958469,'黑色',1,9307314958464,'2024-12-15 04:46:14','2024-12-15 04:46:14'),(5,9307386580099,'银色',1,9307386580096,'2024-12-15 04:47:24','2024-12-15 04:47:24'),(6,9307444134019,'紫色',1,9307444134016,'2024-12-15 04:48:20','2024-12-15 04:48:20'),(17,9325547616387,'粉色',1,9304018587776,'2024-12-15 09:43:00','2024-12-15 09:43:00'),(18,9325547616388,'红色',1,9304018587776,'2024-12-15 09:43:00','2024-12-15 09:43:00');
+INSERT INTO `sale_attr_value` VALUES (3,9307314958468,'蓝色',1,9307314958464,'2024-12-15 04:46:14','2024-12-15 04:46:14'),(4,9307314958469,'黑色',1,9307314958464,'2024-12-15 04:46:14','2024-12-15 04:46:14'),(5,9307386580099,'银色',1,9307386580096,'2024-12-15 04:47:24','2024-12-15 04:47:24'),(6,9307444134019,'紫色',1,9307444134016,'2024-12-15 04:48:20','2024-12-15 04:48:20'),(23,9499217682566,'粉色',1,9304018587776,'2024-12-17 08:49:39','2024-12-17 08:49:39'),(24,9499217682567,'红色',1,9304018587776,'2024-12-17 08:49:39','2024-12-17 08:49:39'),(25,9499217682568,'K1',2,9304018587776,'2024-12-17 08:49:39','2024-12-17 08:49:39'),(26,9499217682569,'K2',2,9304018587776,'2024-12-17 08:49:39','2024-12-17 08:49:39');
 /*!40000 ALTER TABLE `sale_attr_value` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `sku`
+--
+
+DROP TABLE IF EXISTS `sku`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `sku` (
+  `id` bigint NOT NULL AUTO_INCREMENT,
+  `sku_id` bigint NOT NULL,
+  `spu_id` bigint NOT NULL,
+  `category_3_id` bigint NOT NULL,
+  `tm_id` bigint NOT NULL,
+  `sku_name` varchar(255) NOT NULL,
+  `weight` varchar(255) NOT NULL,
+  `price` bigint NOT NULL,
+  `sku_desc` varchar(255) NOT NULL,
+  `sku_default_img` varchar(255) NOT NULL,
+  `is_sale` tinyint(1) NOT NULL DEFAULT '0',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `sku`
+--
+
+LOCK TABLES `sku` WRITE;
+/*!40000 ALTER TABLE `sku` DISABLE KEYS */;
+INSERT INTO `sku` VALUES (10,9499146396800,9304018587776,61,8883796205696,'oppo find x7','1000',699,'松影墨韵 | 大漠银月 | 海阔天空','/api/static/img/sph/20241215/oppo1.jpeg',0);
+/*!40000 ALTER TABLE `sku` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `sku_attr_value`
+--
+
+DROP TABLE IF EXISTS `sku_attr_value`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `sku_attr_value` (
+  `id` bigint NOT NULL AUTO_INCREMENT,
+  `sku_attr_value_id` bigint NOT NULL,
+  `attr_id` bigint NOT NULL,
+  `value_id` bigint NOT NULL,
+  `value_name` varchar(255) NOT NULL,
+  `attr_name` varchar(255) NOT NULL,
+  `sku_id` bigint NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=31 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `sku_attr_value`
+--
+
+LOCK TABLES `sku_attr_value` WRITE;
+/*!40000 ALTER TABLE `sku_attr_value` DISABLE KEYS */;
+INSERT INTO `sku_attr_value` VALUES (26,9499146402944,4944215272329216,4944215272329217,'安卓手机','手机一级',9499146396800),(27,9499146407040,5172348206452736,5172348206452737,'1200mAh以下','电池容量',9499146396800),(28,9499146410112,5172598098890752,5172598098890753,'128G','运行内存',9499146396800),(29,9499146413184,5172776310673408,5172776310673409,'32G','机身内存',9499146396800),(30,9499146417280,5189255789809664,5336270704218112,'枭龙730G','CPU型号',9499146396800);
+/*!40000 ALTER TABLE `sku_attr_value` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `sku_image`
+--
+
+DROP TABLE IF EXISTS `sku_image`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `sku_image` (
+  `id` bigint NOT NULL AUTO_INCREMENT,
+  `image_id` bigint NOT NULL,
+  `sku_id` bigint NOT NULL,
+  `image_url` varchar(255) NOT NULL,
+  `spu_image_id` bigint NOT NULL,
+  `is_default` varchar(1) NOT NULL DEFAULT '0',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `sku_image`
+--
+
+LOCK TABLES `sku_image` WRITE;
+/*!40000 ALTER TABLE `sku_image` DISABLE KEYS */;
+INSERT INTO `sku_image` VALUES (1,9499217682560,9499146396800,'/api/static/img/sph/20241215/oppo1.jpeg',9499217682560,'1'),(2,9499217682561,9499146396800,'/api/static/img/sph/20241215/oppo2.jpeg',9499217682561,'0'),(3,9499217682562,9499146396800,'/api/static/img/sph/20241217/oppo3.jpeg',9499217682562,'0'),(4,9499217682563,9499146396800,'/api/static/img/sph/20241217/oppo4.jpeg',9499217682563,'0');
+/*!40000 ALTER TABLE `sku_image` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `sku_sale_attr_value`
+--
+
+DROP TABLE IF EXISTS `sku_sale_attr_value`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `sku_sale_attr_value` (
+  `id` bigint NOT NULL AUTO_INCREMENT,
+  `sku_sale_attr_value_id` bigint NOT NULL,
+  `sale_attr_id` bigint NOT NULL,
+  `sale_attr_value_id` bigint NOT NULL,
+  `sale_attr_name` varchar(255) NOT NULL,
+  `sale_attr_value_name` varchar(255) NOT NULL,
+  `sku_id` bigint NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `sku_sale_attr_value`
+--
+
+LOCK TABLES `sku_sale_attr_value` WRITE;
+/*!40000 ALTER TABLE `sku_sale_attr_value` DISABLE KEYS */;
+INSERT INTO `sku_sale_attr_value` VALUES (3,9499146420352,9497454667906,9497454667908,'颜色','粉色',9499146396800),(4,9499146422400,9497454667907,9497454667910,'版本','K1',9499146396800);
+/*!40000 ALTER TABLE `sku_sale_attr_value` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -376,7 +495,7 @@ CREATE TABLE `spu_image_list` (
   PRIMARY KEY (`id`),
   KEY `idx_image_name` (`image_name`) USING BTREE,
   KEY `idx_image_id` (`image_id`) USING BTREE
-) ENGINE=InnoDB AUTO_INCREMENT=17 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=23 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -385,7 +504,7 @@ CREATE TABLE `spu_image_list` (
 
 LOCK TABLES `spu_image_list` WRITE;
 /*!40000 ALTER TABLE `spu_image_list` DISABLE KEYS */;
-INSERT INTO `spu_image_list` VALUES (3,9307314958465,'vivo1.jpeg','/api/static/img/sph/20241215/vivo1.jpeg',9307314958464,'2024-12-15 04:46:14','2024-12-15 04:46:14'),(4,9307314958466,'vivo2.jpeg','/api/static/img/sph/20241215/vivo2.jpeg',9307314958464,'2024-12-15 04:46:14','2024-12-15 04:46:14'),(5,9307386580097,'meta70.jpg','/api/static/img/sph/20241215/meta70.jpg',9307386580096,'2024-12-15 04:47:24','2024-12-15 04:47:24'),(6,9307444134017,'apple14pro.jpeg','/api/static/img/sph/20241215/apple14pro.jpeg',9307444134016,'2024-12-15 04:48:20','2024-12-15 04:48:20'),(15,9325547616384,'oppo1.jpeg','/api/static/img/sph/20241215/oppo1.jpeg',9304018587776,'2024-12-15 09:43:00','2024-12-15 09:43:00'),(16,9325547616385,'oppo2.jpeg','/api/static/img/sph/20241215/oppo2.jpeg',9304018587776,'2024-12-15 09:43:00','2024-12-15 09:43:00');
+INSERT INTO `spu_image_list` VALUES (3,9307314958465,'vivo1.jpeg','/api/static/img/sph/20241215/vivo1.jpeg',9307314958464,'2024-12-15 04:46:14','2024-12-15 04:46:14'),(4,9307314958466,'vivo2.jpeg','/api/static/img/sph/20241215/vivo2.jpeg',9307314958464,'2024-12-15 04:46:14','2024-12-15 04:46:14'),(5,9307386580097,'meta70.jpg','/api/static/img/sph/20241215/meta70.jpg',9307386580096,'2024-12-15 04:47:24','2024-12-15 04:47:24'),(6,9307444134017,'apple14pro.jpeg','/api/static/img/sph/20241215/apple14pro.jpeg',9307444134016,'2024-12-15 04:48:20','2024-12-15 04:48:20'),(19,9499217682560,'oppo1.jpeg','/api/static/img/sph/20241215/oppo1.jpeg',9304018587776,'2024-12-17 08:49:39','2024-12-17 08:49:39'),(20,9499217682561,'oppo2.jpeg','/api/static/img/sph/20241215/oppo2.jpeg',9304018587776,'2024-12-17 08:49:39','2024-12-17 08:49:39'),(21,9499217682562,'oppo3.jpeg','/api/static/img/sph/20241217/oppo3.jpeg',9304018587776,'2024-12-17 08:49:39','2024-12-17 08:49:39'),(22,9499217682563,'oppo4.jpeg','/api/static/img/sph/20241217/oppo4.jpeg',9304018587776,'2024-12-17 08:49:39','2024-12-17 08:49:39');
 /*!40000 ALTER TABLE `spu_image_list` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -405,7 +524,7 @@ CREATE TABLE `spu_sale_attr` (
   `create_time` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
   `update_time` timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=17 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -414,7 +533,7 @@ CREATE TABLE `spu_sale_attr` (
 
 LOCK TABLES `spu_sale_attr` WRITE;
 /*!40000 ALTER TABLE `spu_sale_attr` DISABLE KEYS */;
-INSERT INTO `spu_sale_attr` VALUES (2,9307314958467,1,'颜色',9307314958464,'2024-12-15 04:46:14','2024-12-15 04:46:14'),(3,9307386580098,1,'颜色',9307386580096,'2024-12-15 04:47:24','2024-12-15 04:47:24'),(4,9307444134018,1,'颜色',9307444134016,'2024-12-15 04:48:20','2024-12-15 04:48:20'),(12,9325547616386,1,'颜色',9304018587776,'2024-12-15 09:43:00','2024-12-15 09:43:00');
+INSERT INTO `spu_sale_attr` VALUES (2,9307314958467,1,'颜色',9307314958464,'2024-12-15 04:46:14','2024-12-15 04:46:14'),(3,9307386580098,1,'颜色',9307386580096,'2024-12-15 04:47:24','2024-12-15 04:47:24'),(4,9307444134018,1,'颜色',9307444134016,'2024-12-15 04:48:20','2024-12-15 04:48:20'),(15,9499217682564,1,'颜色',9304018587776,'2024-12-17 08:49:39','2024-12-17 08:49:39'),(16,9499217682565,2,'版本',9304018587776,'2024-12-17 08:49:39','2024-12-17 08:49:39');
 /*!40000 ALTER TABLE `spu_sale_attr` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -517,4 +636,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2024-12-15 17:47:00
+-- Dump completed on 2024-12-17 16:57:50

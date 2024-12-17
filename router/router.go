@@ -98,6 +98,13 @@ func Setup(mode string) *gin.Engine {
 		// 商品 SKU 接口
 		adminProductGroup.GET("/spuImageList/:id", controller.SpuController.GetSpuImageList)
 		adminProductGroup.GET("/spuSaleAttrList/:id", controller.SpuController.GetSpuSaleAttrList)
+		adminProductGroup.POST("/saveSkuInfo", controller.SkuController.SaveSkuInfo)
+		adminProductGroup.GET("/findBySpuId/:id", controller.SkuController.FindBySpuId)
+		adminProductGroup.GET("/list/:page/:limit", controller.SkuController.GetSkuList)
+		adminProductGroup.GET("/onSale/:id", controller.SkuController.OnSaleSku)
+		adminProductGroup.GET("/cancelSale/:id", controller.SkuController.CancelSaleSku)
+		adminProductGroup.DELETE("/deleteSku/:id", controller.SkuController.DeleteSku)
+		adminProductGroup.GET("/getSkuInfo/:id", controller.SkuController.GetSkuInfo)
 	}
 
 	r.NoRoute(func(c *gin.Context) {
