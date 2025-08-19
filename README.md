@@ -37,7 +37,7 @@
 
 ### 商品基础属性接口
 
-- [X] 删除基础属性接口（/admin/deleteAttr/{attrId}）
+- [X] 删除基础属性接口（/admin/product/deleteAttr/{attrId}）
 - [X] 获取分类下已有的属性与属性值接口（/admin/product/attrInfoList/{c1Id}/{c2Id}/{c3Id}）
 - [X] 添加或者修改已有的属性的（/admin/product/saveAttrInfo）
 

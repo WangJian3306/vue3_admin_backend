@@ -97,7 +97,7 @@ func (*attrController) GetAttr(c *gin.Context) {
 // @Param attrId path int true "属性 ID"
 // @Security ApiKeyAuth
 // @Success 200 {object} ResponseData
-// @Router /admin/deleteAttr/{attrId} [delete]
+// @Router /admin/product/deleteAttr/{attrId} [delete]
 func (a *attrController) DeleteAttr(c *gin.Context) {
 	idStr := c.Param("attrId")
 	attrId, err := strconv.ParseInt(idStr, 10, 64)
