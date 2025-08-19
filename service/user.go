@@ -114,6 +114,7 @@ func (*userService) GetUserList(username string, page, limit int64) (data *model
 
 func (*userService) UpdateUser(p *model.ParamUserUpdate) (err error) {
 	user := &model.User{
+		UserID:   p.UserID,
 		Username: p.Username,
 		Name:     p.Name,
 	}

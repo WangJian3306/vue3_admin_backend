@@ -28,6 +28,7 @@ type ParamUserSignUp struct {
 
 // ParamUserUpdate 更新用户参数
 type ParamUserUpdate struct {
+	UserID   int64  `json:"id" binding:"required"`       // 用户ID
 	Username string `json:"username" binding:"required"` // 用户姓名
 	Name     string `json:"name" binding:"required"`     // 用户昵称
 }

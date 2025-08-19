@@ -57,7 +57,7 @@ func (*menuDao) QuerySubMenuByID(menuId int64) (count int64, err error) {
 }
 
 func (*menuDao) DeleteMenuByID(menuId int64) (err error) {
-	sqlStr := `DELETE FROM menu WHERE id = ?`
+	sqlStr := `DELETE FROM menu WHERE menu_id = ?`
 	_, err = db.Exec(sqlStr, menuId)
 	return err
 }

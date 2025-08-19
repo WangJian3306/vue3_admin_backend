@@ -45,6 +45,8 @@ func Setup(mode string) *gin.Engine {
 		adminAclGroup.GET("/user/:page/:limit", controller.UserController.GetUser)
 		adminAclGroup.GET("/user/toAssign/:adminId", controller.UserController.ToAssign)
 		adminAclGroup.POST("/user/doAssignRole", controller.UserController.DoAssignRole)
+		adminAclGroup.DELETE("/user/remove/:id", controller.UserController.DeleteUser)
+		adminAclGroup.PUT("/user/update", controller.UserController.UpdateUser)
 
 		// 角色管理
 		adminAclGroup.GET("/role/:page/:limit", controller.RoleController.GetRole)
