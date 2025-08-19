@@ -8,7 +8,7 @@ services:
       MYSQL_USER: vue3_admin            # 可选，创建自定义用户
       MYSQL_PASSWORD: password          # 可选，自定义用户密码
     ports:
-      - "3307:3306"
+      - "3306:3306"
     volumes:
       - ./init-sql/:/docker-entrypoint-initdb.d/
     command:
