@@ -1,6 +1,95 @@
 # 硅谷甄选前端项目后端 API
 
-使用 Golang 实现的硅谷甄选后端 API，已实现老师上课使用的所有 API，欢迎大家提提建议。
+使用 Golang 实现的硅谷甄选项目的后端 API，已实现老师上课使用的所有 API，欢迎大家提提建议。
+
+## 如何使用
+
+需要本地电脑已经安装好 `docker` 和 `docker-compose`，如何安装和使用`docker`请参考尚硅谷的`docker`课程。
+
+1. 克隆本项目到本地目录
+   ```
+   git clone https://github.com/WangJian3306/vue3_admin_backend.git
+   ```
+2. 使用`docker-compose`一键启动
+   ```
+   cd vue3_admin_backend
+   docker-compose up --build -d
+   ```
+3. 运行成功后就可以浏览器器访问 `swagger`地址进行测试，`swagger`地址：`http://127.0.0.1:10086/swagger/index.html#/`
+   ![swagger页面](./images/swagger-ui.png)
+
+4. `swagger`地址能够访问，说明程序启动没问题，可以使用本地地址（127.0.0.1:10086）给前端调用了。
+
+5. 登录测试，默认账号密码：`admin`/`111111`
+
+   ```bash
+   curl -X 'POST' \
+   'http://127.0.0.1:10086/admin/acl/index/login' \
+   -H 'accept: application/json' \
+   -H 'Content-Type: application/json' \
+   -d '{
+   "password": "111111",
+   "username": "admin"
+   }'
+   ```
+   预期输出：
+   ```json
+   {
+      "code": 200,
+      "data": "xxTokenxxx",
+      "message": "success",
+      "ok": true
+   }
+   ```
+
+## 不同
+
+已知的和老师前端实现不同地方如下，其它地方同学如果发现和老师的不同，请参考[我实现的前端代码](https://github.com/WangJian3306/vue3_admin_template.git)进行调整。
+
+1. 本项目实现所有 API 接口都是进行`Token`验证的。
+
+   老师上课实现的路由守卫已经自动全部都带了`Token`，不用担心。<br>
+   但是在使用`swagger`时需要先登录获取`token`，稍微麻烦些。
+
+2. 文件上传接口`/admin/product/fileUpload`
+
+   本项目实现的文件上传接口需要验证`Token`，`<el-upload>` 组件上传时，需使用`headers`属性携带`Token`请求头。
+
+   ```vue
+   <template>
+       <el-upload action="/admin/product/fileUpload" :headers="headers"></el-upload>
+   </template>
+   <script setup>
+       // el-upload 上传 http 请求头，携带 Token 
+       // 引入用户相关的仓库
+       import useUserStore from '@/store/modules/user'
+       // 获取用户相关的小仓库：获取仓库内部token，登录成功以后携带给服务器
+       const userStore = useUserStore()
+       const headers = {Token: userStore.token}
+   </script>
+   ```
+
+3. 前端`SaleAttr interface`中的`baseSaleAttrId`字段数据类型为`number`，页面使用不兼容时，需要使用`Number()`进行数据类型转换。
+
+   ```typescript
+   // 销售属性对象
+   export interface SaleAttr {
+     id?: number
+     spuId?: number
+     baseSaleAttrId: number // 这里是 number，没有 string
+     saleAttrName: string
+     spuSaleAttrValueList: SpuSaleAttrValueList
+     flag?: boolean
+     saleAttrValue?: string
+   }
+   
+   // 准备一个新的销售属性对象：将来带给服务器即可
+   let newSaleAtrr: SaleAttr = {
+      baseSaleAttrId: Number(baseSaleAttrId), // 这里是使用 Number() 进行数据类型转换
+      saleAttrName,
+      spuSaleAttrValueList: [],
+   }
+   ```
 
 ## 已实现的 API
 
@@ -79,72 +168,6 @@
 - [X] 商品详情接口（/admin/product/getSkuInfo/{skuId}）
 - [X] 删除商品接口（/admin/product/deleteSKU/{skuId})
 
-
-## 不同
-
-已知的和老师前端实现不同地方如下，其它地方同学如果发现和老师的不同，请参考[我实现的前端代码](https://github.com/WangJian3306/vue3_admin_template.git)进行调整。
-
-1. 本项目实现所有 API 接口都是进行`Token`验证的。
-
-   老师上课实现的路由守卫已经自动全部都带了`Token`，不用担心。在使用`swagger`时需要先登录结果获取`token`，稍微麻烦些。
-
-2. 文件上传接口`/admin/product/fileUpload`
-
-   本项目实现的文件上传接口需要验证`Token`，`<el-upload>` 组件上传时，需使用`headers`属性携带`Token`请求头。
-   
-   ```html
-   <template>
-       <el-upload action="/admin/product/fileUpload" :headers="headers"></el-upload>
-   </template>
-   <script setup>
-       // el-upload 上传 http 请求头，携带 Token 
-       // 引入用户相关的仓库
-       import useUserStore from '@/store/modules/user'
-       // 获取用户相关的小仓库：获取仓库内部token，登录成功以后携带给服务器
-       const userStore = useUserStore()
-       const headers = {Token: userStore.token}
-   </script>
-   ```
-
-3. 前端`SaleAttr interface`中的`baseSaleAttrId`字段数据类型为`number`，页面使用不兼容时使用`Number()`进行数据类型转换
-   
-   ```javascript
-   // 销售属性对象
-   export interface SaleAttr {
-     id?: number
-     spuId?: number
-     baseSaleAttrId: number // 这里是 number，没有 string
-     saleAttrName: string
-     spuSaleAttrValueList: SpuSaleAttrValueList
-     flag?: boolean
-     saleAttrValue?: string
-   }
-   
-   // 准备一个新的销售属性对象：将来带给服务器即可
-   let newSaleAtrr: SaleAttr = {
-      baseSaleAttrId: Number(baseSaleAttrId), // 这里是使用 Number() 进行数据类型转换
-      saleAttrName,
-      spuSaleAttrValueList: [],
-   }
-   ```
-
-## 如何使用
-
-需要本地电脑安装 `docker` 和 `docker-compose`，如何安装和使用`docker`请参考尚硅谷的`docker`课程。
-
-1. 克隆本项目到本地目录
-   ```
-   git clone https://github.com/WangJian3306/vue3_admin_backend.git
-   ```
-2. 使用`docker-compose`一键启动
-   ```
-   cd vue3_admin_backend
-   docker-compose up --build -d
-   ```
-3. 运行成功后就可以浏览器器访问 `swagger`地址进行测试，`swagger`地址：`http://127.0.0.1:10086/swagger/index.html#/`
-   ![swagger页面](./images/swagger-ui.png)
-
-4. `swagger`地址能够访问，说明程序启动没问题，可以使用本地地址（127.0.0.1:10086）给前端调用了
 
 ## 鸣谢：
 
