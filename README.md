@@ -20,6 +20,16 @@
 
 4. `swagger`地址能够访问，说明程序启动没问题，可以使用本地地址（127.0.0.1:10086）给前端调用了。
 
+   ```env
+   // .evn.development
+   # 变量必须以 VITE_ 为前缀才能暴露给外部读取
+   NODE_ENV = 'development'
+   VITE_APP_TITLE = '硅谷甄选运营平台'
+   VITE_APP_BASE_API = '/api'
+   # VITE_SERVE = 'http://sph-api.atguigu.cn'
+   VITE_SERVE = 'http://127.0.0.1:10086'
+   ```
+
 5. 登录测试，默认账号密码：`admin`/`111111`
 
    ```bash
@@ -36,7 +46,7 @@
    ```json
    {
       "code": 200,
-      "data": "xxTokenxxx",
+      "data": "This is Token...",
       "message": "success",
       "ok": true
    }
