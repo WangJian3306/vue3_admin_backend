@@ -225,7 +225,7 @@ func (*userController) DeleteUser(c *gin.Context) {
 	idStr := c.Param("id")
 	userId, err := strconv.ParseInt(idStr, 10, 64)
 	if err != nil {
-		zap.L().Error("get delete detail with invalid param", zap.Error(err))
+		zap.L().Error("DeleteUser with invalid param", zap.Error(err))
 		ResponseError(c, CodeInvalidParam)
 		return
 	}

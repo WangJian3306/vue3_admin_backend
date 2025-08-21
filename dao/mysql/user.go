@@ -4,6 +4,7 @@ import (
 	"crypto/md5"
 	"database/sql"
 	"encoding/hex"
+	"github.com/jmoiron/sqlx"
 	"math"
 	"vue3_admin/model"
 )
@@ -108,6 +109,17 @@ func (u *userDao) UpdateUser(user *model.User) (err error) {
 }
 
 func (u *userDao) DeleteUser(userId int64) (err error) {
+	tx, err := db.Beginx()
+	if err != nil {
+		return err
+	}
+	defer func() {
+		if err != nil {
+			tx.Rollback()
+			return
+		}
+		err = tx.Commit()
+	}()
 	sqlStr := `DELETE FROM user WHERE user_id=?`
 	_, err = tx.Exec(sqlStr, userId)
 
