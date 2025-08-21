@@ -109,7 +109,44 @@ func (u *userDao) UpdateUser(user *model.User) (err error) {
 
 func (u *userDao) DeleteUser(userId int64) (err error) {
 	sqlStr := `DELETE FROM user WHERE user_id=?`
-	_, err = db.Exec(sqlStr, userId)
+	_, err = tx.Exec(sqlStr, userId)
+
+	// 删除用户角色关联
+	sqlStr = `DELETE FROM user_role WHERE user_id = ?`
+	_, err = tx.Exec(sqlStr, userId)
+
+	return err
+}
+
+func (u *userDao) BatchDeleteUser(userIDs []int64) (err error) {
+	tx, err := db.Beginx()
+	if err != nil {
+		return err
+	}
+	defer func() {
+		if err != nil {
+			tx.Rollback()
+			return
+		}
+		err = tx.Commit()
+	}()
+
+	query, args, err := sqlx.In("DELETE FROM user WHERE user_id IN (?)", userIDs)
+	if err != nil {
+		return err
+	}
+
+	query = tx.Rebind(query)
+	_, err = tx.Exec(query, args...)
+
+	// 删除用户角色关联
+	query, args, err = sqlx.In("DELETE FROM user_role WHERE user_id IN (?)", userIDs)
+	if err != nil {
+		return err
+	}
+	query = tx.Rebind(query)
+	_, err = tx.Exec(query, args...)
+
 	return err
 }
 

@@ -127,6 +127,7 @@
 
 ### 用户管理
 
+- [X] 批量删除用户接口（/admin/acl/user/batchRemove）
 - [X] 用户分配角色接口（/admin/acl/user/doAssignRole）
 - [X] 删除用户接口（/admin/acl/user/remove/{id}）
 - [X] 用户新增接口（/admin/acl/user/save）

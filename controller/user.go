@@ -239,6 +239,41 @@ func (*userController) DeleteUser(c *gin.Context) {
 	ResponseSuccess(c, nil)
 }
 
+// BatchDeleteUser 批量删除用户
+// @Summary 批量删除用户接口
+// @Description 处理批量删除用户请求
+// @Tags 用户管理
+// @Accept application/json
+// @Produce application/json
+// @Param token header string true "用户 Token"
+// @Param object body []int64 true "用户 ID 列表"
+// @Security ApiKeyAuth
+// @Success 200 {object} ResponseData
+// @Router /admin/acl/user/batchRemove [delete]
+func (*userController) BatchDeleteUser(c *gin.Context) {
+	var userIDs []int64
+	// 绑定 JSON 请求体到 userIDs 切片
+	if err := c.ShouldBindJSON(&userIDs); err != nil {
+		zap.L().Error("BatchDeleteUser with invalid param", zap.Error(err))
+		ResponseError(c, CodeInvalidParam)
+		return
+	}
+	// 检查用户 ID 列表是否为空
+	if len(userIDs) == 0 {
+		zap.L().Error("BatchDeleteUser with empty userIDs")
+		ResponseError(c, CodeInvalidParam)
+		return
+	}
+	// 调用服务层删除用户
+	err := service.UserService.BatchDeleteUser(userIDs)
+	if err != nil {
+		zap.L().Error("service.UserService.BatchDeleteUser() failed", zap.Error(err))
+		ResponseError(c, CodeServerBusy)
+		return
+	}
+	ResponseSuccess(c, nil)
+}
+
 // ToAssign 获取用户角色分配接口
 // @Summary 用户角色分配接口
 // @Description 获取用户角色分配息

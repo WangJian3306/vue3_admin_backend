@@ -127,6 +127,10 @@ func (*userService) DeleteUser(userId int64) (err error) {
 	return mysql.UserDao.DeleteUser(userId)
 }
 
+func (*userService) BatchDeleteUser(userIDs []int64) (err error) {
+	return mysql.UserDao.BatchDeleteUser(userIDs)
+}
+
 func (*userService) ToAssign(userId int64) (data *model.ResponseToAssignRole, err error) {
 	roleList, err := mysql.RoleDao.GetAllRoleList()
 	if err != nil {
