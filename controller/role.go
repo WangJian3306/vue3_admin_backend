@@ -57,7 +57,7 @@ func (r *roleController) GetRole(c *gin.Context) {
 func (r *roleController) SaveRole(c *gin.Context) {
 	p := new(model.ParamRoleSave)
 	if err := c.ShouldBindJSON(p); err != nil {
-		zap.L().Error("Save Role with invalid param", zap.Error(err))
+		zap.L().Error("SaveRole with invalid param", zap.Error(err))
 		ResponseError(c, CodeInvalidParam)
 		return
 	}
@@ -114,7 +114,7 @@ func (r *roleController) DeleteRole(c *gin.Context) {
 	idStr := c.Param("id")
 	roleId, err := strconv.ParseInt(idStr, 10, 64)
 	if err != nil {
-		zap.L().Error("get delete detail with invalid param", zap.Error(err))
+		zap.L().Error("DeleteRole with invalid param", zap.Error(err))
 		ResponseError(c, CodeInvalidParam)
 		return
 	}

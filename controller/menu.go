@@ -48,7 +48,7 @@ func (*menuController) GetMenu(c *gin.Context) {
 func (*menuController) SaveMenu(c *gin.Context) {
 	p := new(model.ParamMenuSave)
 	if err := c.ShouldBindJSON(p); err != nil {
-		zap.L().Error("Save Menu with invalid param", zap.Error(err))
+		zap.L().Error("SaveMenu with invalid param", zap.Error(err))
 		ResponseError(c, CodeInvalidParam)
 		return
 	}
@@ -75,7 +75,7 @@ func (*menuController) SaveMenu(c *gin.Context) {
 func (*menuController) UpdateMenu(c *gin.Context) {
 	p := new(model.ParamMenuUpdate)
 	if err := c.ShouldBindJSON(p); err != nil {
-		zap.L().Error("Update Menu with invalid param", zap.Error(err))
+		zap.L().Error("UpdateMenu with invalid param", zap.Error(err))
 		ResponseError(c, CodeInvalidParam)
 		return
 	}
@@ -103,7 +103,7 @@ func (*menuController) DeleteMenu(c *gin.Context) {
 	idStr := c.Param("id")
 	menuId, err := strconv.ParseInt(idStr, 10, 64)
 	if err != nil {
-		zap.L().Error("service.MenuService.DeleteMenu() failed", zap.Error(err))
+		zap.L().Error("DeleteMenu with invalid param", zap.Error(err))
 		ResponseError(c, CodeInvalidParam)
 		return
 	}
@@ -138,7 +138,7 @@ func (*menuController) ToAssign(c *gin.Context) {
 	fmt.Println(idStr)
 	roleId, err := strconv.ParseInt(idStr, 10, 64)
 	if err != nil {
-		zap.L().Error("service.MenuService.ToAssign() failed", zap.Error(err))
+		zap.L().Error("ToAssign with invalid param", zap.Error(err))
 		ResponseError(c, CodeInvalidParam)
 		return
 	}
@@ -167,7 +167,7 @@ func (*menuController) DoAssign(c *gin.Context) {
 	idStr := c.Query("roleId")
 	roleId, err := strconv.ParseInt(idStr, 10, 64)
 	if err != nil {
-		zap.L().Error("roleId convert failed", zap.Error(err))
+		zap.L().Error("DoAssign with invalid param", zap.Error(err))
 		ResponseError(c, CodeInvalidParam)
 		return
 	}

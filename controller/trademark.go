@@ -29,7 +29,7 @@ func (*trademarkController) CreateTrademark(c *gin.Context) {
 	p := new(model.ParamTmSave)
 	if err := c.ShouldBindJSON(p); err != nil {
 		// 请求参数有误，直接返回响应
-		zap.L().Error("CreateTradeMark with invalid param", zap.Error(err))
+		zap.L().Error("CreateTrademark with invalid param", zap.Error(err))
 		ResponseError(c, CodeInvalidParam)
 		return
 	}
@@ -89,7 +89,7 @@ func (*trademarkController) UpdateTrademark(c *gin.Context) {
 	p := new(model.ParamTmUpdate)
 	if err := c.ShouldBindJSON(p); err != nil {
 		// 请求参数有误，直接返回响应
-		zap.L().Error("Login with invalid param", zap.Error(err))
+		zap.L().Error("UpdateTrademark with invalid param", zap.Error(err))
 		ResponseError(c, CodeInvalidParam)
 		return
 	}
@@ -121,7 +121,7 @@ func (*trademarkController) DeleteTrademark(c *gin.Context) {
 	idStr := c.Param("id")
 	tmId, err := strconv.ParseInt(idStr, 10, 64)
 	if err != nil {
-		zap.L().Error("get delete detail with invalid param", zap.Error(err))
+		zap.L().Error("DeleteTrademark with invalid param", zap.Error(err))
 		ResponseError(c, CodeInvalidParam)
 		return
 	}

@@ -92,7 +92,7 @@ func (s *spuController) GetSpuList(c *gin.Context) {
 	c3IdStr := c.Query("category3Id")
 	c3Id, err := strconv.ParseInt(c3IdStr, 10, 64)
 	if err != nil {
-		zap.L().Error("service.SpuService.GetSpuList() failed", zap.Error(err))
+		zap.L().Error("GetSpuList with invalid param", zap.Error(err))
 		ResponseError(c, CodeInvalidParam)
 		return
 	}
@@ -123,7 +123,7 @@ func (s *spuController) GetSpuImageList(c *gin.Context) {
 	idStr := c.Param("id")
 	spuId, err := strconv.ParseInt(idStr, 10, 64)
 	if err != nil {
-		zap.L().Error("service.SpuService.GetSpuImageList() failed", zap.Error(err))
+		zap.L().Error("GetSpuImageList with invalid param", zap.Error(err))
 		ResponseError(c, CodeInvalidParam)
 		return
 	}
@@ -151,7 +151,7 @@ func (s *spuController) GetSpuSaleAttrList(c *gin.Context) {
 	idStr := c.Param("id")
 	spuId, err := strconv.ParseInt(idStr, 10, 64)
 	if err != nil {
-		zap.L().Error("service.SpuService.GetSpuSaleAttrList() failed", zap.Error(err))
+		zap.L().Error("GetSpuSaleAttrList with invalid param", zap.Error(err))
 		ResponseError(c, CodeInvalidParam)
 		return
 	}
@@ -207,7 +207,7 @@ func (s *spuController) DeleteSpu(c *gin.Context) {
 	idStr := c.Param("id")
 	spuId, err := strconv.ParseInt(idStr, 10, 64)
 	if err != nil {
-		zap.L().Error("service.SpuService.DeleteSpu() failed", zap.Error(err))
+		zap.L().Error("DeleteSpu with invalid param", zap.Error(err))
 		ResponseError(c, CodeInvalidParam)
 		return
 	}

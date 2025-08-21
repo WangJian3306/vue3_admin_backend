@@ -26,7 +26,7 @@ type skuController struct{}
 func (s *skuController) SaveSkuInfo(c *gin.Context) {
 	p := new(model.SkuInfo)
 	if err := c.ShouldBindJSON(p); err != nil {
-		zap.L().Error("SaveSku with invalid param", zap.Error(err))
+		zap.L().Error("SaveSkuInfo with invalid param", zap.Error(err))
 		ResponseError(c, CodeInvalidParam)
 		return
 	}
@@ -61,7 +61,7 @@ func (s *skuController) FindBySpuId(c *gin.Context) {
 	idStr := c.Param("id")
 	spuId, err := strconv.ParseInt(idStr, 10, 64)
 	if err != nil {
-		zap.L().Error("service.SkuController.FindBySpuId() failed", zap.Error(err))
+		zap.L().Error("FindBySpuId with invalid param", zap.Error(err))
 		ResponseError(c, CodeInvalidParam)
 		return
 	}
@@ -118,7 +118,7 @@ func (s *skuController) OnSaleSku(c *gin.Context) {
 	idStr := c.Param("id")
 	skuId, err := strconv.ParseInt(idStr, 10, 64)
 	if err != nil {
-		zap.L().Error("service.SkuController.OnSaleSku() failed", zap.Error(err))
+		zap.L().Error("OnSaleSku with invalid param", zap.Error(err))
 		ResponseError(c, CodeInvalidParam)
 		return
 	}
@@ -147,7 +147,7 @@ func (s *skuController) CancelSaleSku(c *gin.Context) {
 	idStr := c.Param("id")
 	skuId, err := strconv.ParseInt(idStr, 10, 64)
 	if err != nil {
-		zap.L().Error("service.SkuController.CancelSaleSku() failed", zap.Error(err))
+		zap.L().Error("CancelSaleSku with invalid param", zap.Error(err))
 		ResponseError(c, CodeInvalidParam)
 		return
 	}
@@ -176,7 +176,7 @@ func (s *skuController) DeleteSku(c *gin.Context) {
 	idStr := c.Param("id")
 	skuId, err := strconv.ParseInt(idStr, 10, 64)
 	if err != nil {
-		zap.L().Error("service.SkuController.DeleteSku() failed", zap.Error(err))
+		zap.L().Error("DeleteSku with invalid param", zap.Error(err))
 		ResponseError(c, CodeInvalidParam)
 		return
 	}
@@ -193,7 +193,7 @@ func (s *skuController) GetSkuInfo(c *gin.Context) {
 	idStr := c.Param("id")
 	skuId, err := strconv.ParseInt(idStr, 10, 64)
 	if err != nil {
-		zap.L().Error("service.SkuController.GetSkuInfo() failed", zap.Error(err))
+		zap.L().Error("GetSkuInfo with invalid param", zap.Error(err))
 		ResponseError(c, CodeInvalidParam)
 		return
 	}
