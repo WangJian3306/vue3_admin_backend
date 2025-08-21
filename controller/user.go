@@ -289,7 +289,7 @@ func (*userController) ToAssign(c *gin.Context) {
 	idStr := c.Param("adminId")
 	userId, err := strconv.ParseInt(idStr, 10, 64)
 	if err != nil {
-		zap.L().Error("get role detail with invalid param", zap.Error(err))
+		zap.L().Error("ToAssign with invalid param", zap.Error(err))
 		ResponseError(c, CodeInvalidParam)
 		return
 	}

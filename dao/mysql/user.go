@@ -85,7 +85,20 @@ func (u *userDao) GetUserList(username string, page, limit int64) (data *model.R
 	if err = db.Get(&count, countSqlStr); err != nil {
 		return nil, err
 	}
-	sqlStr := `SELECT u.user_id, u.username, u.password, u.name, IFNULL(r.role_name, '') AS role_name, u.create_time, u.update_time FROM user u LEFT JOIN user_role ur on u.user_id = ur.user_id LEFT JOIN role r on ur.role_id = r.role_id WHERE u.username like CONCAT('%',?,'%') LIMIT ?,?;`
+	sqlStr := `SELECT 
+			u.user_id, 
+			u.username, 
+			u.password, 
+			u.name, 
+			IFNULL(GROUP_CONCAT(DISTINCT r.role_name SEPARATOR ','), '') AS role_name, 
+			u.create_time, 
+			u.update_time 
+		FROM user u 
+		LEFT JOIN user_role ur ON u.user_id = ur.user_id 
+		LEFT JOIN role r ON ur.role_id = r.role_id 
+		WHERE u.username LIKE CONCAT('%',?,'%') 
+		GROUP BY u.user_id
+		LIMIT ?,?;`
 	userList := make([]*model.ResponseUser, 0, 2)
 	if err = db.Select(&userList, sqlStr, username, (page-1)*limit, limit); err != nil {
 		return nil, err
@@ -180,12 +193,37 @@ func (u *userDao) DeleteAssignRoleByUserId(userId int64) (err error) {
 }
 
 func (u *userDao) DoAssign(p *model.ParamDoAssignRole) (err error) {
-	sqlStr := `INSERT INTO user_role(user_id, role_id) VALUES(?,?)`
-	for _, roleId := range p.RoleIDList {
-		_, err = db.Exec(sqlStr, p.UserID, roleId)
+	tx, err := db.Beginx()
+	if err != nil {
 		return err
 	}
-	return err
+	defer func() {
+		if err != nil {
+			tx.Rollback()
+			return
+		}
+		err = tx.Commit()
+	}()
+
+	// 如果没有角色需要分配，直接返回
+	if len(p.RoleIDList) == 0 {
+		return nil
+	}
+
+	stmt, err := tx.Preparex("INSERT INTO user_role(user_id, role_id) VALUES(?, ?)")
+	if err != nil {
+		return err
+	}
+	defer stmt.Close()
+
+	for _, roleID := range p.RoleIDList {
+		_, err = stmt.Exec(p.UserID, roleID)
+		if err != nil {
+			return err
+		}
+	}
+
+	return nil
 }
 
 func (u *userDao) GetAssignMenuByUserId(userId int64) (menu []*model.Menu, err error) {
