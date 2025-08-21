@@ -28,7 +28,7 @@ func (*attrController) SaveAttrInfo(c *gin.Context) {
 	p := new(model.Attr)
 	if err := c.ShouldBindJSON(p); err != nil {
 		// 请求参数有误，直接返回响应
-		zap.L().Error("CreateAttr with invalid param", zap.Error(err))
+		zap.L().Error("SaveAttrInfo with invalid param", zap.Error(err))
 		ResponseError(c, CodeInvalidParam)
 		return
 	}
@@ -72,7 +72,7 @@ func (*attrController) SaveAttrInfo(c *gin.Context) {
 func (*attrController) GetAttr(c *gin.Context) {
 	c1Id, c2Id, c3Id, err := getAllCategoryId(c)
 	if err != nil {
-		zap.L().Error("get post detail with invalid param", zap.Error(err))
+		zap.L().Error("GetAttr with invalid param", zap.Error(err))
 		ResponseError(c, CodeInvalidParam)
 		return
 	}
@@ -102,7 +102,7 @@ func (a *attrController) DeleteAttr(c *gin.Context) {
 	idStr := c.Param("attrId")
 	attrId, err := strconv.ParseInt(idStr, 10, 64)
 	if err != nil {
-		zap.L().Error("get post detail with invalid param", zap.Error(err))
+		zap.L().Error("DeleteAttr with invalid param", zap.Error(err))
 		ResponseError(c, CodeInvalidParam)
 		return
 	}

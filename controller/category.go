@@ -49,7 +49,7 @@ func (*categoryController) GetCategory2(c *gin.Context) {
 	idStr := c.Param("id")
 	category1Id, err := strconv.ParseInt(idStr, 10, 64)
 	if err != nil {
-		zap.L().Error("get post detail with invalid param", zap.Error(err))
+		zap.L().Error("GetCategory2 with invalid param", zap.Error(err))
 		ResponseError(c, CodeInvalidParam)
 		return
 	}
@@ -78,7 +78,7 @@ func (*categoryController) GetCategory3(c *gin.Context) {
 	idStr := c.Param("id")
 	category2Id, err := strconv.ParseInt(idStr, 10, 64)
 	if err != nil {
-		zap.L().Error("get post detail with invalid param", zap.Error(err))
+		zap.L().Error("GetCategory3 with invalid param", zap.Error(err))
 		ResponseError(c, CodeInvalidParam)
 		return
 	}
@@ -117,7 +117,7 @@ func (*categoryController) CreateCategory3(c *gin.Context) {
 	p := new(model.ParamC3Create)
 	if err := c.ShouldBindJSON(p); err != nil {
 		// 请求参数有误，直接返回响应
-		zap.L().Error("Login with invalid param", zap.Error(err))
+		zap.L().Error("CreateCategory3 with invalid param", zap.Error(err))
 		ResponseError(c, CodeInvalidParam)
 		return
 	}
