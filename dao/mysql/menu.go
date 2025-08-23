@@ -10,7 +10,7 @@ var MenuDao menuDao
 type menuDao struct{}
 
 func (*menuDao) GetMenuList() (data []model.Menu, err error) {
-	sqlStr := `SELECT menu_id, name, pid, code, to_code,type, status, level FROM menu`
+	sqlStr := `SELECT menu_id, name, pid, code, to_code,type, status, level, update_time, create_time FROM menu`
 	if err = db.Select(&data, sqlStr); err != nil {
 		zap.L().Error("dao.menuDao.GetMenuList() error", zap.Error(err))
 		return nil, err
