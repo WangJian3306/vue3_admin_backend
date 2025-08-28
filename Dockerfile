@@ -23,7 +23,7 @@ RUN go mod download
 COPY . .
 
 # 生成 swagger 文档并将代码编译成二进制可执行文件 app
-RUN swag init && go build -o app .
+RUN swag init --parseDependency --parseInternal --parseDepth 1 && go build -o app .
 
 
 # 接下来创建一个小镜像

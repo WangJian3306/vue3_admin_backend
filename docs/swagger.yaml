@@ -1,5 +1,10 @@
 basePath: /
 definitions:
+  SimpleDateFormat.SimpleDateFormat:
+    properties:
+      time.Time:
+        type: string
+    type: object
   controller._ResponseAllSaleAttrList:
     properties:
       code:
@@ -220,6 +225,7 @@ definitions:
     - 206
     - 207
     - 208
+    format: int64
     type: integer
     x-enum-varnames:
     - CodeSuccess
@@ -259,12 +265,12 @@ definitions:
         description: 分类级别
         type: integer
       createTime:
-        type: string
+        $ref: '#/definitions/SimpleDateFormat.SimpleDateFormat'
       id:
         description: 属性ID
         type: integer
       updateTime:
-        type: string
+        $ref: '#/definitions/SimpleDateFormat.SimpleDateFormat'
     required:
     - attrName
     - categoryId
@@ -292,7 +298,7 @@ definitions:
       code:
         type: string
       createTime:
-        type: string
+        $ref: '#/definitions/SimpleDateFormat.SimpleDateFormat'
       id:
         type: integer
       level:
@@ -310,7 +316,7 @@ definitions:
       type:
         type: integer
       updateTime:
-        type: string
+        $ref: '#/definitions/SimpleDateFormat.SimpleDateFormat'
     type: object
   model.ParamDoAssignRole:
     properties:
@@ -417,6 +423,9 @@ definitions:
     type: object
   model.ParamUserUpdate:
     properties:
+      id:
+        description: 用户ID
+        type: integer
       name:
         description: 用户昵称
         type: string
@@ -424,6 +433,7 @@ definitions:
         description: 用户姓名
         type: string
     required:
+    - id
     - name
     - username
     type: object
@@ -451,7 +461,7 @@ definitions:
       category3Id:
         type: integer
       createTime:
-        type: string
+        $ref: '#/definitions/SimpleDateFormat.SimpleDateFormat'
       id:
         type: integer
       isSale:
@@ -481,7 +491,7 @@ definitions:
       tmId:
         type: integer
       updateTime:
-        type: string
+        $ref: '#/definitions/SimpleDateFormat.SimpleDateFormat'
       weight:
         type: integer
     type: object
@@ -552,7 +562,7 @@ definitions:
       ID:
         type: integer
       createTime:
-        type: string
+        $ref: '#/definitions/SimpleDateFormat.SimpleDateFormat'
       id:
         type: integer
       name:
@@ -564,7 +574,7 @@ definitions:
       roleName:
         type: string
       updateTime:
-        type: string
+        $ref: '#/definitions/SimpleDateFormat.SimpleDateFormat'
       username:
         type: string
     type: object
@@ -607,7 +617,7 @@ definitions:
       ID:
         type: integer
       createTime:
-        type: string
+        $ref: '#/definitions/SimpleDateFormat.SimpleDateFormat'
       id:
         type: integer
       remark:
@@ -615,14 +625,14 @@ definitions:
       roleName:
         type: string
       updateTime:
-        type: string
+        $ref: '#/definitions/SimpleDateFormat.SimpleDateFormat'
     type: object
   model.SaleAttr:
     properties:
       ID:
         type: integer
       createTime:
-        type: string
+        $ref: '#/definitions/SimpleDateFormat.SimpleDateFormat'
       id:
         description: 销售属性ID
         type: integer
@@ -630,7 +640,7 @@ definitions:
         description: 销售属性名称
         type: string
       updateTime:
-        type: string
+        $ref: '#/definitions/SimpleDateFormat.SimpleDateFormat'
     type: object
   model.SaleAttrValue:
     properties:
@@ -639,7 +649,7 @@ definitions:
       baseSaleAttrId:
         type: integer
       createTime:
-        type: string
+        $ref: '#/definitions/SimpleDateFormat.SimpleDateFormat'
       id:
         type: integer
       saleAttrValueName:
@@ -647,7 +657,7 @@ definitions:
       spuId:
         type: integer
       updateTime:
-        type: string
+        $ref: '#/definitions/SimpleDateFormat.SimpleDateFormat'
     type: object
   model.SkuAttrValue:
     properties:
@@ -659,16 +669,33 @@ definitions:
       attrName:
         type: string
       createTime:
-        type: string
+        $ref: '#/definitions/SimpleDateFormat.SimpleDateFormat'
       id:
         type: integer
       skuId:
         type: integer
       updateTime:
-        type: string
+        $ref: '#/definitions/SimpleDateFormat.SimpleDateFormat'
       valueId:
         description: 属性值ID
         type: integer
+      valueName:
+        type: string
+    type: object
+  model.SkuAttrValueDTO:
+    properties:
+      attrId:
+        description: 平台属性ID
+        type: string
+      attrName:
+        type: string
+      id:
+        type: integer
+      skuId:
+        type: integer
+      valueId:
+        description: 属性值ID
+        type: string
       valueName:
         type: string
     type: object
@@ -677,7 +704,7 @@ definitions:
       ID:
         type: integer
       createTime:
-        type: string
+        $ref: '#/definitions/SimpleDateFormat.SimpleDateFormat'
       id:
         type: integer
       imgName:
@@ -691,16 +718,64 @@ definitions:
       spuImgId:
         type: integer
       updateTime:
+        $ref: '#/definitions/SimpleDateFormat.SimpleDateFormat'
+    type: object
+  model.SkuImgDTO:
+    properties:
+      id:
+        type: integer
+      imgName:
         type: string
+      imgUrl:
+        type: string
+      isDefault:
+        type: string
+      skuId:
+        type: integer
+      spuImgId:
+        type: integer
     type: object
   model.SkuInfo:
+    properties:
+      category3Id:
+        type: string
+      id:
+        type: integer
+      isSale:
+        type: integer
+      price:
+        type: string
+      skuAttrValueList:
+        items:
+          $ref: '#/definitions/model.SkuAttrValueDTO'
+        type: array
+      skuDefaultImg:
+        type: string
+      skuDesc:
+        type: string
+      skuImageList:
+        items:
+          $ref: '#/definitions/model.SkuImgDTO'
+        type: array
+      skuName:
+        type: string
+      skuSaleAttrValueList:
+        items:
+          $ref: '#/definitions/model.SkuSaleAttrValueDTO'
+        type: array
+      spuID:
+        type: string
+      tmId:
+        type: string
+      weight:
+        type: string
     type: object
   model.SkuSaleAttrValue:
     properties:
       ID:
         type: integer
       createTime:
-        type: string
+        $ref: '#/definitions/SimpleDateFormat.SimpleDateFormat'
       id:
         type: integer
       saleAttrId:
@@ -715,7 +790,23 @@ definitions:
       skuId:
         type: integer
       updateTime:
+        $ref: '#/definitions/SimpleDateFormat.SimpleDateFormat'
+    type: object
+  model.SkuSaleAttrValueDTO:
+    properties:
+      id:
+        type: integer
+      saleAttrId:
+        description: 销售属性ID
         type: string
+      saleAttrName:
+        type: string
+      saleAttrValueId:
+        type: string
+      saleAttrValueName:
+        type: string
+      skuId:
+        type: integer
     type: object
   model.Spu:
     properties:
@@ -724,7 +815,7 @@ definitions:
       category3Id:
         type: integer
       createTime:
-        type: string
+        $ref: '#/definitions/SimpleDateFormat.SimpleDateFormat'
       description:
         type: string
       id:
@@ -742,14 +833,14 @@ definitions:
       tmId:
         type: integer
       updateTime:
-        type: string
+        $ref: '#/definitions/SimpleDateFormat.SimpleDateFormat'
     type: object
   model.SpuImage:
     properties:
       ID:
         type: integer
       createTime:
-        type: string
+        $ref: '#/definitions/SimpleDateFormat.SimpleDateFormat'
       id:
         type: integer
       imgName:
@@ -759,7 +850,7 @@ definitions:
       spuId:
         type: integer
       updateTime:
-        type: string
+        $ref: '#/definitions/SimpleDateFormat.SimpleDateFormat'
     type: object
   model.SpuSaleAttr:
     properties:
@@ -781,7 +872,7 @@ definitions:
       ID:
         type: integer
       createTime:
-        type: string
+        $ref: '#/definitions/SimpleDateFormat.SimpleDateFormat'
       id:
         type: integer
       logoUrl:
@@ -789,7 +880,7 @@ definitions:
       tmName:
         type: string
       updateTime:
-        type: string
+        $ref: '#/definitions/SimpleDateFormat.SimpleDateFormat'
     type: object
 host: 127.0.0.1:10086
 info:
@@ -1204,6 +1295,37 @@ paths:
       summary: 获取用户分页列表
       tags:
       - 用户管理
+  /admin/acl/user/batchRemove:
+    delete:
+      consumes:
+      - application/json
+      description: 处理批量删除用户请求
+      parameters:
+      - description: 用户 Token
+        in: header
+        name: token
+        required: true
+        type: string
+      - description: 用户 ID 列表
+        in: body
+        name: object
+        required: true
+        schema:
+          items:
+            type: integer
+          type: array
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/controller.ResponseData'
+      security:
+      - ApiKeyAuth: []
+      summary: 批量删除用户接口
+      tags:
+      - 用户管理
   /admin/acl/user/doAssignRole:
     post:
       consumes:
@@ -1342,34 +1464,6 @@ paths:
       summary: 更新用户接口
       tags:
       - 用户管理
-  /admin/deleteAttr/{attrId}:
-    delete:
-      consumes:
-      - application/json
-      description: 处理删除基础属性请求
-      parameters:
-      - description: 用户 Token
-        in: header
-        name: token
-        required: true
-        type: string
-      - description: 属性 ID
-        in: path
-        name: attrId
-        required: true
-        type: integer
-      produces:
-      - application/json
-      responses:
-        "200":
-          description: OK
-          schema:
-            $ref: '#/definitions/controller.ResponseData'
-      security:
-      - ApiKeyAuth: []
-      summary: 删除基础属性接口
-      tags:
-      - 商品基础属性接口
   /admin/product/{page}/{limit}:
     get:
       consumes:
@@ -1639,6 +1733,34 @@ paths:
       summary: 下架SKU接口
       tags:
       - 商品SKU接口
+  /admin/product/deleteAttr/{attrId}:
+    delete:
+      consumes:
+      - application/json
+      description: 处理删除基础属性请求
+      parameters:
+      - description: 用户 Token
+        in: header
+        name: token
+        required: true
+        type: string
+      - description: 属性 ID
+        in: path
+        name: attrId
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/controller.ResponseData'
+      security:
+      - ApiKeyAuth: []
+      summary: 删除基础属性接口
+      tags:
+      - 商品基础属性接口
   /admin/product/deleteSku/{skuId}:
     delete:
       consumes:

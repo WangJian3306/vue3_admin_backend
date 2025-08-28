@@ -597,6 +597,55 @@ const docTemplate = `{
                 }
             }
         },
+        "/admin/acl/user/batchRemove": {
+            "delete": {
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
+                "description": "处理批量删除用户请求",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "用户管理"
+                ],
+                "summary": "批量删除用户接口",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "用户 Token",
+                        "name": "token",
+                        "in": "header",
+                        "required": true
+                    },
+                    {
+                        "description": "用户 ID 列表",
+                        "name": "object",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "type": "integer"
+                            }
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/controller.ResponseData"
+                        }
+                    }
+                }
+            }
+        },
         "/admin/acl/user/doAssignRole": {
             "post": {
                 "security": [
@@ -868,50 +917,6 @@ const docTemplate = `{
                         "description": "OK",
                         "schema": {
                             "$ref": "#/definitions/controller._ResponseUserList"
-                        }
-                    }
-                }
-            }
-        },
-        "/admin/deleteAttr/{attrId}": {
-            "delete": {
-                "security": [
-                    {
-                        "ApiKeyAuth": []
-                    }
-                ],
-                "description": "处理删除基础属性请求",
-                "consumes": [
-                    "application/json"
-                ],
-                "produces": [
-                    "application/json"
-                ],
-                "tags": [
-                    "商品基础属性接口"
-                ],
-                "summary": "删除基础属性接口",
-                "parameters": [
-                    {
-                        "type": "string",
-                        "description": "用户 Token",
-                        "name": "token",
-                        "in": "header",
-                        "required": true
-                    },
-                    {
-                        "type": "integer",
-                        "description": "属性 ID",
-                        "name": "attrId",
-                        "in": "path",
-                        "required": true
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "OK",
-                        "schema": {
-                            "$ref": "#/definitions/controller.ResponseData"
                         }
                     }
                 }
@@ -1266,6 +1271,50 @@ const docTemplate = `{
                         "type": "integer",
                         "description": "SKU ID",
                         "name": "skuId",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/controller.ResponseData"
+                        }
+                    }
+                }
+            }
+        },
+        "/admin/product/deleteAttr/{attrId}": {
+            "delete": {
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
+                "description": "处理删除基础属性请求",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "商品基础属性接口"
+                ],
+                "summary": "删除基础属性接口",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "用户 Token",
+                        "name": "token",
+                        "in": "header",
+                        "required": true
+                    },
+                    {
+                        "type": "integer",
+                        "description": "属性 ID",
+                        "name": "attrId",
                         "in": "path",
                         "required": true
                     }
@@ -2008,8 +2057,17 @@ const docTemplate = `{
         }
     },
     "definitions": {
+        "SimpleDateFormat.SimpleDateFormat": {
+            "type": "object",
+            "properties": {
+                "time.Time": {
+                    "type": "string"
+                }
+            }
+        },
         "controller.ResCode": {
             "type": "integer",
+            "format": "int64",
             "enum": [
                 200,
                 201,
@@ -2418,14 +2476,14 @@ const docTemplate = `{
                     "type": "integer"
                 },
                 "createTime": {
-                    "type": "string"
+                    "$ref": "#/definitions/SimpleDateFormat.SimpleDateFormat"
                 },
                 "id": {
                     "description": "属性ID",
                     "type": "integer"
                 },
                 "updateTime": {
-                    "type": "string"
+                    "$ref": "#/definitions/SimpleDateFormat.SimpleDateFormat"
                 }
             }
         },
@@ -2462,7 +2520,7 @@ const docTemplate = `{
                     "type": "string"
                 },
                 "createTime": {
-                    "type": "string"
+                    "$ref": "#/definitions/SimpleDateFormat.SimpleDateFormat"
                 },
                 "id": {
                     "type": "integer"
@@ -2489,7 +2547,7 @@ const docTemplate = `{
                     "type": "integer"
                 },
                 "updateTime": {
-                    "type": "string"
+                    "$ref": "#/definitions/SimpleDateFormat.SimpleDateFormat"
                 }
             }
         },
@@ -2649,10 +2707,15 @@ const docTemplate = `{
         "model.ParamUserUpdate": {
             "type": "object",
             "required": [
+                "id",
                 "name",
                 "username"
             ],
             "properties": {
+                "id": {
+                    "description": "用户ID",
+                    "type": "integer"
+                },
                 "name": {
                     "description": "用户昵称",
                     "type": "string"
@@ -2699,7 +2762,7 @@ const docTemplate = `{
                     "type": "integer"
                 },
                 "createTime": {
-                    "type": "string"
+                    "$ref": "#/definitions/SimpleDateFormat.SimpleDateFormat"
                 },
                 "id": {
                     "type": "integer"
@@ -2744,7 +2807,7 @@ const docTemplate = `{
                     "type": "integer"
                 },
                 "updateTime": {
-                    "type": "string"
+                    "$ref": "#/definitions/SimpleDateFormat.SimpleDateFormat"
                 },
                 "weight": {
                     "type": "integer"
@@ -2853,7 +2916,7 @@ const docTemplate = `{
                     "type": "integer"
                 },
                 "createTime": {
-                    "type": "string"
+                    "$ref": "#/definitions/SimpleDateFormat.SimpleDateFormat"
                 },
                 "id": {
                     "type": "integer"
@@ -2871,7 +2934,7 @@ const docTemplate = `{
                     "type": "string"
                 },
                 "updateTime": {
-                    "type": "string"
+                    "$ref": "#/definitions/SimpleDateFormat.SimpleDateFormat"
                 },
                 "username": {
                     "type": "string"
@@ -2937,7 +3000,7 @@ const docTemplate = `{
                     "type": "integer"
                 },
                 "createTime": {
-                    "type": "string"
+                    "$ref": "#/definitions/SimpleDateFormat.SimpleDateFormat"
                 },
                 "id": {
                     "type": "integer"
@@ -2949,7 +3012,7 @@ const docTemplate = `{
                     "type": "string"
                 },
                 "updateTime": {
-                    "type": "string"
+                    "$ref": "#/definitions/SimpleDateFormat.SimpleDateFormat"
                 }
             }
         },
@@ -2960,7 +3023,7 @@ const docTemplate = `{
                     "type": "integer"
                 },
                 "createTime": {
-                    "type": "string"
+                    "$ref": "#/definitions/SimpleDateFormat.SimpleDateFormat"
                 },
                 "id": {
                     "description": "销售属性ID",
@@ -2971,7 +3034,7 @@ const docTemplate = `{
                     "type": "string"
                 },
                 "updateTime": {
-                    "type": "string"
+                    "$ref": "#/definitions/SimpleDateFormat.SimpleDateFormat"
                 }
             }
         },
@@ -2985,7 +3048,7 @@ const docTemplate = `{
                     "type": "integer"
                 },
                 "createTime": {
-                    "type": "string"
+                    "$ref": "#/definitions/SimpleDateFormat.SimpleDateFormat"
                 },
                 "id": {
                     "type": "integer"
@@ -2997,7 +3060,7 @@ const docTemplate = `{
                     "type": "integer"
                 },
                 "updateTime": {
-                    "type": "string"
+                    "$ref": "#/definitions/SimpleDateFormat.SimpleDateFormat"
                 }
             }
         },
@@ -3015,7 +3078,7 @@ const docTemplate = `{
                     "type": "string"
                 },
                 "createTime": {
-                    "type": "string"
+                    "$ref": "#/definitions/SimpleDateFormat.SimpleDateFormat"
                 },
                 "id": {
                     "type": "integer"
@@ -3024,11 +3087,36 @@ const docTemplate = `{
                     "type": "integer"
                 },
                 "updateTime": {
-                    "type": "string"
+                    "$ref": "#/definitions/SimpleDateFormat.SimpleDateFormat"
                 },
                 "valueId": {
                     "description": "属性值ID",
                     "type": "integer"
+                },
+                "valueName": {
+                    "type": "string"
+                }
+            }
+        },
+        "model.SkuAttrValueDTO": {
+            "type": "object",
+            "properties": {
+                "attrId": {
+                    "description": "平台属性ID",
+                    "type": "string"
+                },
+                "attrName": {
+                    "type": "string"
+                },
+                "id": {
+                    "type": "integer"
+                },
+                "skuId": {
+                    "type": "integer"
+                },
+                "valueId": {
+                    "description": "属性值ID",
+                    "type": "string"
                 },
                 "valueName": {
                     "type": "string"
@@ -3042,7 +3130,7 @@ const docTemplate = `{
                     "type": "integer"
                 },
                 "createTime": {
-                    "type": "string"
+                    "$ref": "#/definitions/SimpleDateFormat.SimpleDateFormat"
                 },
                 "id": {
                     "type": "integer"
@@ -3063,12 +3151,85 @@ const docTemplate = `{
                     "type": "integer"
                 },
                 "updateTime": {
+                    "$ref": "#/definitions/SimpleDateFormat.SimpleDateFormat"
+                }
+            }
+        },
+        "model.SkuImgDTO": {
+            "type": "object",
+            "properties": {
+                "id": {
+                    "type": "integer"
+                },
+                "imgName": {
                     "type": "string"
+                },
+                "imgUrl": {
+                    "type": "string"
+                },
+                "isDefault": {
+                    "type": "string"
+                },
+                "skuId": {
+                    "type": "integer"
+                },
+                "spuImgId": {
+                    "type": "integer"
                 }
             }
         },
         "model.SkuInfo": {
-            "type": "object"
+            "type": "object",
+            "properties": {
+                "category3Id": {
+                    "type": "string"
+                },
+                "id": {
+                    "type": "integer"
+                },
+                "isSale": {
+                    "type": "integer"
+                },
+                "price": {
+                    "type": "string"
+                },
+                "skuAttrValueList": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/model.SkuAttrValueDTO"
+                    }
+                },
+                "skuDefaultImg": {
+                    "type": "string"
+                },
+                "skuDesc": {
+                    "type": "string"
+                },
+                "skuImageList": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/model.SkuImgDTO"
+                    }
+                },
+                "skuName": {
+                    "type": "string"
+                },
+                "skuSaleAttrValueList": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/model.SkuSaleAttrValueDTO"
+                    }
+                },
+                "spuID": {
+                    "type": "string"
+                },
+                "tmId": {
+                    "type": "string"
+                },
+                "weight": {
+                    "type": "string"
+                }
+            }
         },
         "model.SkuSaleAttrValue": {
             "type": "object",
@@ -3077,7 +3238,7 @@ const docTemplate = `{
                     "type": "integer"
                 },
                 "createTime": {
-                    "type": "string"
+                    "$ref": "#/definitions/SimpleDateFormat.SimpleDateFormat"
                 },
                 "id": {
                     "type": "integer"
@@ -3099,7 +3260,31 @@ const docTemplate = `{
                     "type": "integer"
                 },
                 "updateTime": {
+                    "$ref": "#/definitions/SimpleDateFormat.SimpleDateFormat"
+                }
+            }
+        },
+        "model.SkuSaleAttrValueDTO": {
+            "type": "object",
+            "properties": {
+                "id": {
+                    "type": "integer"
+                },
+                "saleAttrId": {
+                    "description": "销售属性ID",
                     "type": "string"
+                },
+                "saleAttrName": {
+                    "type": "string"
+                },
+                "saleAttrValueId": {
+                    "type": "string"
+                },
+                "saleAttrValueName": {
+                    "type": "string"
+                },
+                "skuId": {
+                    "type": "integer"
                 }
             }
         },
@@ -3113,7 +3298,7 @@ const docTemplate = `{
                     "type": "integer"
                 },
                 "createTime": {
-                    "type": "string"
+                    "$ref": "#/definitions/SimpleDateFormat.SimpleDateFormat"
                 },
                 "description": {
                     "type": "string"
@@ -3140,7 +3325,7 @@ const docTemplate = `{
                     "type": "integer"
                 },
                 "updateTime": {
-                    "type": "string"
+                    "$ref": "#/definitions/SimpleDateFormat.SimpleDateFormat"
                 }
             }
         },
@@ -3151,7 +3336,7 @@ const docTemplate = `{
                     "type": "integer"
                 },
                 "createTime": {
-                    "type": "string"
+                    "$ref": "#/definitions/SimpleDateFormat.SimpleDateFormat"
                 },
                 "id": {
                     "type": "integer"
@@ -3166,7 +3351,7 @@ const docTemplate = `{
                     "type": "integer"
                 },
                 "updateTime": {
-                    "type": "string"
+                    "$ref": "#/definitions/SimpleDateFormat.SimpleDateFormat"
                 }
             }
         },
@@ -3200,7 +3385,7 @@ const docTemplate = `{
                     "type": "integer"
                 },
                 "createTime": {
-                    "type": "string"
+                    "$ref": "#/definitions/SimpleDateFormat.SimpleDateFormat"
                 },
                 "id": {
                     "type": "integer"
@@ -3212,7 +3397,7 @@ const docTemplate = `{
                     "type": "string"
                 },
                 "updateTime": {
-                    "type": "string"
+                    "$ref": "#/definitions/SimpleDateFormat.SimpleDateFormat"
                 }
             }
         }
