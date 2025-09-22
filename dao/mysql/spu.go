@@ -86,9 +86,9 @@ func (s *spuDao) SaveSpuInfo(spu *model.Spu, imageList []*model.SpuImage, spuSal
 }
 
 func (s *spuDao) GetSpuList(c3Id, page, limit int64) ([]*model.Spu, int64, error) {
-	countSqlStr := `SELECT count(spu_id) from spu`
+	countSqlStr := `SELECT count(spu_id) from spu WHERE category3_id = ?`
 	var count int64
-	if err := db.Get(&count, countSqlStr); err != nil {
+	if err := db.Get(&count, countSqlStr, c3Id); err != nil {
 		return nil, 0, err
 	}
 	sqlStr := `SELECT spu_id, spu_name, description, category3_id, tm_id FROM spu WHERE category3_id = ? LIMIT ?,?`
