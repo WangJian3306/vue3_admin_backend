@@ -80,9 +80,9 @@ func (u *userDao) InsertUser(user *model.User) (err error) {
 }
 
 func (u *userDao) GetUserList(username string, page, limit int64) (data *model.ResponseUserList, err error) {
-	countSqlStr := `SELECT count(user_id) FROM user`
+	countSqlStr := `SELECT count(user_id) FROM user WHERE username LIKE CONCAT('%',?,'%')`
 	var count int64
-	if err = db.Get(&count, countSqlStr); err != nil {
+	if err = db.Get(&count, countSqlStr, username); err != nil {
 		return nil, err
 	}
 	sqlStr := `SELECT 

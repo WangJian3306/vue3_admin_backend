@@ -31,9 +31,9 @@ func (r *roleDao) InsertRole(role *model.Role) (err error) {
 }
 
 func (r *roleDao) GetRoleList(roleName string, page, limit int64) (data *model.ResponseRoleList, err error) {
-	countSqlStr := `SELECT COUNT(*) FROM role`
+	countSqlStr := `SELECT COUNT(*) FROM role WHERE role_name like CONCAT('%',?,'%')`
 	var count int64
-	if err = db.Get(&count, countSqlStr); err != nil {
+	if err = db.Get(&count, countSqlStr, roleName); err != nil {
 		return nil, err
 	}
 	sqlStr := `SELECT role_id, role_name, remark, create_time, update_time FROM role WHERE role_name like CONCAT('%',?,'%') LIMIT ?,?`
