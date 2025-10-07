@@ -14,6 +14,7 @@ const (
 	CodeInvalidToken
 	CodeNeedLogin
 	CodeMenuNodeExist
+	CodeNoRoute
 )
 
 var codeMsgMap = map[ResCode]string{
@@ -23,6 +24,7 @@ var codeMsgMap = map[ResCode]string{
 	CodeUserNotExist:    "用户名不存在",
 	CodeInvalidPassword: "用户名或密码错误",
 	CodeServerBusy:      "服务繁忙",
+	CodeNoRoute:         "请求路径不存在",
 	CodeMenuNodeExist:   "该节点下有子节点，不可以删除",
 
 	CodeInvalidToken: "无效的Token",
