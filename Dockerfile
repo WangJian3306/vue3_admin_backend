@@ -29,8 +29,9 @@ RUN swag init --parseDependency --parseInternal --parseDepth 1 && go build -o ap
 # 接下来创建一个小镜像
 FROM scratch
 
-COPY ./static /static
-COPY ./conf /conf
+# 从builder镜像中把静态文件和配置文件拷贝到根目录
+COPY --from=builder /build/static /static
+COPY --from=builder /build/conf /conf
 
 # 从builder镜像中把 app 拷贝到根目录
 COPY --from=builder /build/app /app
