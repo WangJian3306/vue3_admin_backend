@@ -100,6 +100,56 @@
       spuSaleAttrValueList: [],
    }
    ```
+4. 服务接口返回状态码与老师的不一样，除网络问题外，本项目不管接口是否成功，都返回`200`状态码。
+
+   所有服务接口返回数据格式如下：
+
+   ```json
+   {
+      "code": 200,
+      "data": {},
+      "message": "success",
+      "ok": true
+   }
+   ```
+   前端在调用服务接口时，需要根据`code`字段判断接口是否成功。
+   
+   ```typescript
+   // src/utils/request.ts
+   // 第三步：request实例添加响应拦截器
+   request.interceptors.response.use(
+     (response) => {
+       // 成功回调
+       /* 判断服务返回的 code
+          200 -> 请求成功
+          201 -> 请求参数错误
+          202 -> 用户名已存在，用于创建用户
+          203 -> 用户名不存在，用于登录
+          204 -> 用户名或密码错误，用于登录
+          205 -> 服务繁忙，服务内部错误
+          206 -> 无效的Token
+          207 -> 无权访问，需要登录
+          208 -> 该节点下有子节点，不可以删除
+       */
+       const code = response.data.code
+       if (code !== 200) {
+         // 提示错误信息
+         ElMessage({
+           type: 'error',
+           message: response.data.message,
+         })
+         // 抛出错误
+         return Promise.reject(new Error(response.data.message))
+       }
+      
+       // 返回数据
+       return response.data
+     },
+     (error) => {
+       // 失败回调：处理http网络错误
+     },
+   )
+   ```
 
 ## 已实现的 API
 
