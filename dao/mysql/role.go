@@ -56,9 +56,9 @@ func (r *roleDao) GetRoleList(roleName string, page, limit int64) (data *model.R
 	return
 }
 
-func (*roleDao) UpdateRole(data *model.Role) (err error) {
+func (*roleDao) UpdateRole(role *model.Role) (err error) {
 	sqlStr := `UPDATE role SET role_name = ?, remark = ? WHERE role_id = ?`
-	_, err = db.Exec(sqlStr, data.RoleName, data.Remark, data.RoleID)
+	_, err = db.Exec(sqlStr, role.RoleName, role.Remark, role.RoleID)
 	return err
 }
 

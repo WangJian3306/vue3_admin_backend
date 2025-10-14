@@ -14,7 +14,7 @@ type ParamRoleSave struct {
 }
 
 type ParamRoleUpdate struct {
-	RoleID   int64  `json:"role_id"`          // 用户ID，
+	RoleID   int64  `json:"id"`               // 角色ID，
 	RoleName string `json:"roleName"`         // 角色名称，不能为空
 	Remark   string `json:"remark,omitempty"` // 角色备注
 }
