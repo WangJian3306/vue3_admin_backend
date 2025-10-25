@@ -189,6 +189,17 @@ func (s *skuController) DeleteSku(c *gin.Context) {
 	ResponseSuccess(c, nil)
 }
 
+// GetSkuInfo 获取SKU详情
+// @Summary 获取SKU详情接口
+// @Description 处理获取SKU详情请求
+// @Tags 商品SKU接口
+// @Accept application/json
+// @Produce application/json
+// @Param token header string true "用户 Token"
+// @Param skuId path int true "SKU ID"
+// @Security ApiKeyAuth
+// @Success 200 {object} _ResponseSkuInfo
+// @Router /admin/product/getSkuInfo/{skuId} [get]
 func (s *skuController) GetSkuInfo(c *gin.Context) {
 	idStr := c.Param("id")
 	skuId, err := strconv.ParseInt(idStr, 10, 64)

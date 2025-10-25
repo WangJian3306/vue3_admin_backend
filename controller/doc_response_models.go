@@ -84,3 +84,8 @@ type _ResponseSkuFindBySpuId struct {
 	_BaseResponse
 	Data []model.ResponseSkuInfo `json:"data"`
 }
+
+type _ResponseSkuInfo struct {
+	_BaseResponse
+	Data model.ResponseSkuInfo `json:"data"`
+}
